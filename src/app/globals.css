@@ -756,36 +756,32 @@ html[data-motion-pause] .animate-wa-pulse {
   }
 }
 
-/* Hero — flecha simple + cubos en esquinas; centro recortado (sin tapar texto) */
+/* Hero — flecha en canal izquierdo + cubos en esquinas (sin clip global) */
 .hero-rise-motif {
   pointer-events: none;
   position: absolute;
   inset: 0;
   z-index: 1;
+  overflow: visible;
+}
+
+.hero-rise-motif__arrow-wrap {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 8%;
+  width: 30%;
   overflow: hidden;
-  clip-path: polygon(
-    evenodd,
-    0% 0%,
-    100% 0%,
-    100% 100%,
-    0% 100%,
-    0% 0%,
-    7% 12%,
-    93% 12%,
-    93% 80%,
-    7% 80%,
-    7% 12%
-  );
 }
 
 .hero-rise-motif__arrow {
   position: absolute;
-  left: -6%;
-  bottom: 14%;
-  width: min(48%, 240px);
-  height: min(58%, 360px);
-  opacity: 0.55;
-  transform: rotate(-4deg);
+  left: -12%;
+  bottom: -2%;
+  width: 320%;
+  height: 102%;
+  opacity: 0.72;
+  transform: rotate(-2deg);
   transform-origin: left bottom;
 }
 
@@ -797,10 +793,30 @@ html[data-motion-pause] .animate-wa-pulse {
 .hero-rise-motif__cubes {
   position: absolute;
   inset: 0;
+  overflow: visible;
 }
 
 .hero-rise-motif__cube {
   position: absolute;
+}
+
+.hero-rise-motif__cube--tl {
+  transform: translate(0, 0);
+}
+
+.hero-rise-motif__cube--tr {
+  transform: translate(-100%, 0);
+}
+
+.hero-rise-motif__cube--bl {
+  transform: translate(0, -100%);
+}
+
+.hero-rise-motif__cube--br {
+  transform: translate(-100%, -100%);
+}
+
+.hero-rise-motif__cube-inner {
   opacity: 0;
   will-change: transform, opacity;
   animation: hero-cube-rise var(--cube-dur, 10s) ease-in-out var(--cube-delay, 0s) infinite;
@@ -818,66 +834,67 @@ html[data-motion-pause] .animate-wa-pulse {
 @keyframes hero-cube-rise {
   0% {
     opacity: 0;
-    transform: translateY(18px) scale(0.88);
+    transform: translateY(22px) scale(0.86);
   }
   18% {
-    opacity: 0.82;
+    opacity: 0.88;
   }
   70% {
-    opacity: 0.55;
+    opacity: 0.62;
   }
   100% {
     opacity: 0;
-    transform: translateY(-72px) scale(1);
+    transform: translateY(-88px) scale(1.04);
   }
 }
 
 @media (max-width: 767px) {
-  .hero-rise-motif {
-    clip-path: polygon(
-      evenodd,
-      0% 0%,
-      100% 0%,
-      100% 100%,
-      0% 100%,
-      0% 0%,
-      6% 10%,
-      94% 10%,
-      94% 82%,
-      6% 82%,
-      6% 10%
-    );
+  .hero-rise-motif__arrow-wrap {
+    top: auto;
+    bottom: 0;
+    width: 40%;
+    height: 48%;
   }
 
   .hero-rise-motif__arrow {
-    left: -8%;
-    bottom: 18%;
-    width: min(52%, 200px);
-    height: min(52%, 300px);
-    opacity: 0.45;
+    left: -20%;
+    width: 350%;
+    opacity: 0.6;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-rise-motif__arrow-wrap {
+    width: 32%;
   }
 }
 
 @media (min-width: 1024px) {
+  .hero-rise-motif__arrow-wrap {
+    width: 26%;
+    top: 8%;
+    bottom: 6%;
+  }
+
   .hero-rise-motif__arrow {
-    left: -4%;
-    bottom: 12%;
-    width: min(44%, 280px);
+    left: -8%;
+    width: 340%;
+    opacity: 0.82;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-rise-motif__arrow path,
-  .hero-rise-motif__cube {
+  .hero-rise-motif__cube-inner {
     animation: none !important;
   }
 
   .hero-rise-motif__arrow path {
-    opacity: 0.5;
+    opacity: 0.55;
   }
 
-  .hero-rise-motif__cube {
-    opacity: 0.5;
+  .hero-rise-motif__cube-inner {
+    opacity: 0.55;
   }
 }
 

@@ -24,14 +24,14 @@ export function Hero() {
     >
       <Container className="relative">
         <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-          <div className="relative max-md:min-h-[calc(100dvh-4.25rem)] md:min-h-0">
+          <div className="relative overflow-visible max-md:min-h-[calc(100dvh-4.25rem)] md:min-h-0">
             <HeroRiseMotif />
 
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
-              className="hero-mobile-large relative z-[2] flex min-h-[calc(100dvh-4.25rem)] flex-col justify-center text-center max-md:pb-2 md:min-h-0 md:justify-center md:pb-0 lg:text-left"
+              className="hero-mobile-large relative z-[2] flex min-h-[calc(100dvh-4.25rem)] flex-col justify-center text-center max-md:pb-2 md:min-h-0 md:justify-center md:pb-0 lg:pl-16 lg:text-left xl:pl-20"
             >
               <HeroTitle />
 
