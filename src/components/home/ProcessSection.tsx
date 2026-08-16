@@ -143,10 +143,10 @@ function ProcessHeader() {
       <motion.div variants={reduced ? layerRevealReduced : fadeUp}>
         <SectionLabel>Cómo trabajamos</SectionLabel>
         <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-4xl">
-          De la auditoría al sistema funcionando
+          Cuatro pasos para dejar de trabajar como hace diez años.
         </h2>
         <p className="text-text-secondary mt-4 text-sm sm:text-base">
-          Sin sorpresas. Sin tecnicismos. Solo pasos claros hasta que tu negocio opera solo.
+          Sin tecnicismos. Sin funciones inútiles. Solo lo que tu empresa necesita.
         </p>
       </motion.div>
     </motion.div>

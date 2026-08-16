@@ -4,7 +4,7 @@ import { heroEase } from "@/lib/motion/variants";
 import { motion, useReducedMotion } from "framer-motion";
 
 const titleDesktop =
-  "sm:text-5xl sm:leading-[1.08] lg:text-[4rem] xl:text-[5rem] 2xl:text-[5.5rem]";
+  "sm:text-5xl sm:leading-[1.08] lg:text-[3.5rem] xl:text-[4.25rem] 2xl:text-[4.75rem]";
 
 export function HeroTitle() {
   const reduced = useReducedMotion();
@@ -12,7 +12,7 @@ export function HeroTitle() {
   if (reduced) {
     return (
       <h1
-        className={`hero-title-main font-bodoni mb-4 font-normal tracking-tight text-off-white md:mb-5 lg:mb-6 ${titleDesktop}`}
+        className={`hero-title-main font-bodoni mb-2 font-normal tracking-tight text-off-white md:mb-3 lg:mb-4 ${titleDesktop}`}
       >
         Ideas Become{" "}
         <span className="hero-title-accent hero-title-accent--static text-gold-accent">Systems</span>
@@ -21,7 +21,7 @@ export function HeroTitle() {
   }
 
   return (
-    <h1 className={`hero-title-main font-bodoni mb-4 font-normal tracking-tight md:mb-5 lg:mb-6 ${titleDesktop}`}>
+    <h1 className={`hero-title-main font-bodoni mb-2 font-normal tracking-tight md:mb-3 lg:mb-4 ${titleDesktop}`}>
       <span className="block overflow-hidden pb-1">
         <motion.span
           className="block text-off-white"

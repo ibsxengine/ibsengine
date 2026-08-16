@@ -8,25 +8,21 @@ export const PROCESS_STEPS: ProcessStep[] = [
   {
     number: "01",
     title: "Auditoría",
-    description:
-      "Analizamos cómo entran tus clientes, dónde se pierden oportunidades y qué se puede automatizar ya.",
+    description: "Encontramos dónde estás perdiendo tiempo.",
   },
   {
     number: "02",
-    title: "Implementación",
-    description:
-      "Montamos las piezas acordadas: web, WhatsApp, citas, CRM o sistema sectorial. Sin sorpresas.",
+    title: "Diseñamos",
+    description: "Decidimos qué merece la pena automatizar.",
   },
   {
     number: "03",
-    title: "Sistema funcionando",
-    description:
-      "Tu negocio empieza a responder solo, agendar citas y dar seguimiento mientras tú trabajas.",
+    title: "Construimos",
+    description: "Conectamos todo y ponemos el sistema a trabajar.",
   },
   {
     number: "04",
-    title: "Soporte continuo",
-    description:
-      "Ajustamos, mejoramos y añadimos lo que necesites. El sistema crece con tu empresa.",
+    title: "Evolucionamos",
+    description: "Ajustamos y mejoramos el sistema contigo.",
   },
 ];

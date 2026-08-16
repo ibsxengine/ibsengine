@@ -49,20 +49,24 @@ function CommercialBlockContent({ block }: { block: CommercialBlock }) {
         <motion.div variants={textMotion}>
           <div className="flex items-center gap-3">
             <SectionLabel>{block.headline}</SectionLabel>
-            <span className="font-serif text-sm text-white/25">{index}</span>
           </div>
 
           <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-3xl lg:text-4xl">
             {block.tagline}
           </h2>
 
-          <p className="text-text-secondary mt-4 text-sm leading-relaxed sm:text-base">
-            {block.positioning}
-          </p>
+          {block.positioning.split("\n\n").map((para, i) => (
+            <p
+              key={i}
+              className={`text-text-secondary text-sm leading-relaxed sm:text-base ${i === 0 ? "mt-4" : "mt-3"}`}
+            >
+              {para}
+            </p>
+          ))}
         </motion.div>
 
         <motion.ul className="mt-8 space-y-1" variants={staggerBullets}>
-          {block.bullets.map((bullet) => (
+          {(block.bullets ?? []).map((bullet) => (
             <motion.li
               key={bullet}
               variants={bulletReveal}

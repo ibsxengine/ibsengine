@@ -3,97 +3,78 @@ export type CommercialBlock = {
   headline: string;
   tagline: string;
   positioning: string;
-  bullets: string[];
+  bullets?: string[];
+  cta?: { label: string; href: string };
   variant: "navy" | "navy-alt";
 };
 
 export const COMMERCIAL_BLOCKS: CommercialBlock[] = [
   {
-    id: "captacion",
-    headline: "Captación de Clientes",
-    tagline: "Que te encuentren y te elijan",
+    id: "control",
+    headline: "Gestión",
+    tagline: "Deja de hacer de administrativo... eres el jefe.",
     positioning:
-      "No vendemos webs. Vendemos que te llamen cuando alguien busca lo que haces.",
+      "Todo lo que necesitas para gestionar tu negocio, en un solo sitio.",
     bullets: [
-      "Web profesional orientada a conversión",
-      "SEO local para tu zona",
-      "Google Business optimizado",
-      "Gestión de reseñas automáticas",
+      "Clientes y trabajos",
+      "Presupuestos y facturas",
+      "Documentos y estados",
+      "Todo conectado",
     ],
+    cta: { label: "Ver cómo funciona", href: "/servicios#gestion" },
     variant: "navy",
   },
   {
     id: "conversion",
-    headline: "Conversión Inmediata",
-    tagline: "Que cada contacto se convierta en oportunidad",
+    headline: "Tu nueva compañera, nuestra IA",
+    tagline: "Sin vacaciones. Sin pausas. Sin tareas repetitivas.",
     positioning:
-      "Aquí se gana o se pierde dinero cada día. Si no respondes a tiempo, el cliente ya ha llamado a otro.",
-    bullets: [
-      "WhatsApp Business automatizado",
-      "Atención inicial con IA: FAQ, captura de datos y primer contacto",
-      "Formularios inteligentes",
-      "Gestión automática de citas",
-      "Recordatorios y confirmaciones",
-    ],
+      "Mientras tú haces lo importante, tu nueva compañera ya está atendiendo por ti.\n\nLlamadas, WhatsApp, consultas, datos y citas. Cuando tú no puedes estar, ella sí.",
+    cta: { label: "Ver cómo funciona", href: "/servicios#ia" },
     variant: "navy-alt",
   },
   {
     id: "seguimiento",
-    headline: "Seguimiento y Recuperación",
-    tagline: "Recuperar dinero que ya es tuyo",
+    headline: "Automatización",
+    tagline: "La tecnología ya puede hacer ese trabajo. La pregunta es por qué sigues haciéndolo tú.",
     positioning:
-      "No necesitas más leads. Necesitas cerrar los que ya tienes.",
+      "Deja que el sistema haga automáticamente lo que hoy haces una y otra vez.",
     bullets: [
-      "Recuperación de leads perdidos por WhatsApp y email",
-      "Seguimiento de presupuestos sin respuesta",
-      "Automatización de llamadas perdidas",
-      "Reengagement automático de clientes",
-      "Soporte ligero con IA para el seguimiento comercial",
+      "Seguimientos automáticos",
+      "Tareas repetitivas",
+      "Conexión entre herramientas",
+      "Procesos que se ejecutan solos",
     ],
+    cta: { label: "Ver cómo funciona", href: "/servicios#automatizacion" },
     variant: "navy",
-  },
-  {
-    id: "control",
-    headline: "Control del Negocio",
-    tagline: "Saber qué está pasando en tu empresa",
-    positioning:
-      "No vendemos software. Vendemos que sepas en todo momento dónde está cada cliente y cada trabajo.",
-    bullets: [
-      "CRM interno simplificado",
-      "Dashboard de negocio",
-      "Gestión de clientes",
-      "Estados de proyectos y trabajos",
-      "Documentación centralizada",
-    ],
-    variant: "navy-alt",
   },
   {
     id: "sistema-sectorial",
-    headline: "Sistema Sectorial",
-    tagline: "Tu empresa operando como una máquina",
+    headline: "Sistemas a medida",
+    tagline: "Tu negocio no funciona como los demás. Tu sistema tampoco debería.",
     positioning:
-      "App vertical a medida para tu sector. Cada negocio con su flujo — no plantillas genéricas.",
+      "Construimos la solución alrededor de cómo trabajas tú, no al revés.",
     bullets: [
-      "App vertical a medida para cualquier sector",
-      "Gestión de trabajos, obras y servicios",
-      "Presupuestos",
-      "Calendario operativo",
-      "Asignación de tareas y equipos",
-      "Conexión con tu software de facturación habitual",
+      "Aplicaciones adaptadas a tu forma de trabajar",
+      "Integraciones con tus herramientas",
+      "IA adaptada a tu negocio",
+      "Automatizaciones para tus procesos reales",
     ],
-    variant: "navy",
+    cta: { label: "Ver sistemas a medida", href: "/servicios#sistemas" },
+    variant: "navy-alt",
   },
 ];
 
 export const AUDITORIA_CTA = {
-  headline: "Auditoría de Automatización",
-  tagline: "Te enseño cuánto dinero estás perdiendo",
+  headline: "Te enseñamos dónde estás perdiendo tiempo.",
+  tagline: "¿Cuántas horas estás perdiendo haciendo trabajo que nuestra IA podría hacer por ti?",
   description:
-    "Un análisis claro de dónde se escapan tus oportunidades — sin compromiso y sin tecnicismos.",
+    "Enséñanos cómo trabajas durante un día normal. Te señalamos dónde estás perdiendo tiempo y qué trabajo podemos quitarte de encima. Sin tecnicismos. Sin humo. Sin venderte una herramienta que no necesitas.",
   bullets: [
-    "Análisis de leads perdidos",
-    "Fallos de seguimiento detectados",
-    "Oportunidades de automatización",
-    "Mapa de mejoras concreto",
+    "Las tareas que más tiempo te roban",
+    "El trabajo que sigues haciendo a mano sin necesidad",
+    "Qué puede hacer la IA por ti",
+    "Qué podemos automatizar, conectar o eliminar",
+    "Qué deberías automatizar primero y cuánto trabajo puede quitarte",
   ],
 } as const;

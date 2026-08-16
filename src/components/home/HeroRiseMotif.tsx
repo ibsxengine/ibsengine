@@ -1,24 +1,32 @@
+"use client";
+
+import React from "react";
+
+/**
+ * Cubos decorativos — franjas laterales libres del hero.
+ * Izquierda y derecha son deliberadamente asimétricas:
+ * tamaños, alturas y timings distintos para que no parezcan espejados.
+ * Pocos cubos: adorno, no protagonismo.
+ */
 const CUBES = [
-  { left: "0%", top: "2%", size: 38, delay: 0, dur: 11, anchor: "tl" as const },
-  { left: "10%", top: "10%", size: 32, delay: 2.1, dur: 10, anchor: "tl" as const },
-  { left: "98%", top: "3%", size: 36, delay: 1.4, dur: 11, anchor: "tr" as const },
-  { left: "88%", top: "12%", size: 30, delay: 3.4, dur: 10, anchor: "tr" as const },
-  { left: "1%", top: "68%", size: 40, delay: 0.8, dur: 11, anchor: "bl" as const },
-  { left: "11%", top: "82%", size: 34, delay: 2.8, dur: 10, anchor: "bl" as const },
-  { left: "97%", top: "70%", size: 38, delay: 1.9, dur: 11, anchor: "br" as const },
-  { left: "86%", top: "84%", size: 32, delay: 3.9, dur: 10, anchor: "br" as const },
+  // ── Franja izquierda (3 cubos, irregular) ──
+  { left: "7%",  top: "8%",  size: 40, delay: 0,    dur: 12, anchor: "tl" as const },
+  { left: "9%",  top: "44%", size: 24, delay: 2.7,  dur: 9,  anchor: "tl" as const },
+  { left: "6%",  top: "79%", size: 32, delay: 1.1,  dur: 11, anchor: "bl" as const },
+
+  // ── Franja derecha (4 cubos, distintas proporciones) ──
+  { left: "97%", top: "18%", size: 28, delay: 0.8,  dur: 10, anchor: "tr" as const },
+  { left: "95%", top: "35%", size: 36, delay: 3.5,  dur: 13, anchor: "tr" as const },
+  { left: "98%", top: "62%", size: 22, delay: 1.6,  dur: 9,  anchor: "tr" as const },
+  { left: "94%", top: "88%", size: 30, delay: 4.2,  dur: 11, anchor: "br" as const },
 ] as const;
 
 function cubeAnchorClass(anchor: (typeof CUBES)[number]["anchor"]) {
   switch (anchor) {
-    case "tl":
-      return "hero-rise-motif__cube--tl";
-    case "tr":
-      return "hero-rise-motif__cube--tr";
-    case "bl":
-      return "hero-rise-motif__cube--bl";
-    case "br":
-      return "hero-rise-motif__cube--br";
+    case "tl": return "hero-rise-motif__cube--tl";
+    case "tr": return "hero-rise-motif__cube--tr";
+    case "bl": return "hero-rise-motif__cube--bl";
+    case "br": return "hero-rise-motif__cube--br";
   }
 }
 
@@ -30,7 +38,7 @@ function IsoCube({ size }: { size: number }) {
       viewBox="0 0 24 28"
       fill="none"
       aria-hidden
-      className="block drop-shadow-[0_3px_12px_rgba(160,136,86,0.4)]"
+      className="block drop-shadow-[0_3px_12px_rgba(160,136,86,0.35)]"
     >
       <path d="M12 2 22 8v12l-10 6L2 20V8l10-6z" fill="#e2cfa0" />
       <path d="M2 8l10 6 10-6v12l-10 6V14L2 8z" fill="#9a7f52" />
@@ -39,41 +47,17 @@ function IsoCube({ size }: { size: number }) {
   );
 }
 
-/** Flecha curva en margen izquierdo + cubos en esquinas (sin clip global) */
+/** Solo en franjas laterales — máscara horizontal que oculta el centro */
 export function HeroRiseMotif() {
-  return (
-    <div className="hero-rise-motif" aria-hidden>
-      <div className="hero-rise-motif__arrow-wrap">
-        <svg
-          className="hero-rise-motif__arrow"
-          viewBox="0 0 400 480"
-          fill="none"
-          preserveAspectRatio="xMinYMax meet"
-        >
-          <defs>
-            <linearGradient id="heroArrowFill" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7a6340" stopOpacity="0.55" />
-              <stop offset="55%" stopColor="#b89858" stopOpacity="0.75" />
-              <stop offset="100%" stopColor="#e2cfa0" stopOpacity="0.9" />
-            </linearGradient>
-          </defs>
-          <path
-            d="
-              M 10 462
-              C 68 388 112 296 142 204
-              C 168 128 184 76 194 42
-              L 248 10
-              L 212 44
-              C 172 88 152 160 120 240
-              C 82 332 44 412 10 462
-              Z
-            "
-            fill="url(#heroArrowFill)"
-          />
-        </svg>
-      </div>
+  const mask =
+    "linear-gradient(to right, black 0%, black 10%, transparent 16%, transparent 84%, black 90%, black 100%)";
 
-      <div className="hero-rise-motif__cubes">
+  return (
+    <div className="hero-rise-motif" aria-hidden style={{ zIndex: -1 }}>
+      <div
+        className="hero-rise-motif__cubes"
+        style={{ maskImage: mask, WebkitMaskImage: mask }}
+      >
         {CUBES.map((cube, i) => (
           <div
             key={i}

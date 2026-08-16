@@ -1,15 +1,30 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { AmbientSection } from "@/components/layout/ActiveSectionProvider";
 import { useSectionInView } from "@/components/layout/SectionInViewContext";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { DemoFrame } from "@/components/demos/DemoFrame";
-import { SystemCanvas } from "@/components/demos/SystemCanvas";
-import { LiveSignatureFlow } from "@/components/signature/LiveSignatureFlow";
 import { getShowcaseBlockVariant } from "@/lib/motion/section-animations";
 import { defaultTransition, layerRevealReduced } from "@/lib/motion/variants";
 import { motion, useReducedMotion } from "framer-motion";
+
+/** Cargadas en diferido — son las demos más pesadas de la página */
+const SystemCanvas = dynamic(
+  () => import("@/components/demos/SystemCanvas").then((m) => m.SystemCanvas),
+  {
+    ssr: false,
+    loading: () => <div className="h-48 animate-pulse rounded-sm bg-white/[0.04]" />,
+  }
+);
+const LiveSignatureFlow = dynamic(
+  () => import("@/components/signature/LiveSignatureFlow").then((m) => m.LiveSignatureFlow),
+  {
+    ssr: false,
+    loading: () => <div className="h-48 animate-pulse rounded-sm bg-white/[0.04]" />,
+  }
+);
 
 function ShowcaseContent() {
   const inView = useSectionInView();
@@ -27,11 +42,11 @@ function ShowcaseContent() {
       >
         <SectionLabel>Arquitectura del sistema</SectionLabel>
         <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-4xl lg:text-[2.75rem]">
-          Construye tu lógica de negocio
+          Tu negocio sigue funcionando. Tú dejas de cargar con todo.
         </h2>
-        <p className="text-text-secondary mx-auto mt-4 max-w-xl text-sm leading-relaxed sm:text-base">
-          Cada canal conectado. Cada contacto procesado. Cada cita, lead y trabajo
-          fluye hacia donde toca — sea cual sea tu negocio.
+        <p className="text-text-secondary mx-auto mt-5 max-w-xl text-sm leading-relaxed sm:text-base">
+          Cada canal conectado. Cada contacto procesado. Cada tarea enviada donde toca.
+          IBS Engine conecta IA, gestión y automatización para que el trabajo fluya sin depender de ti.
         </p>
       </motion.div>
 
@@ -68,7 +83,7 @@ export function SignatureShowcase() {
       sectionId="como-funciona"
       id="como-funciona"
       className="overflow-hidden pt-8 pb-14 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20"
-      aria-label="Cómo funciona IBS Engine"
+      aria-label="Arquitectura del sistema IBS Engine"
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.08]" aria-hidden />
       <ShowcaseContent />

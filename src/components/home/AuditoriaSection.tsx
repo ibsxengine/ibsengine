@@ -2,7 +2,11 @@
 
 import { useSectionInView } from "@/components/layout/SectionInViewContext";
 import { AUDITORIA_CTA } from "@/lib/content/commercial-blocks";
-import { AuditoriaVisual } from "@/components/demos/AuditoriaVisual";
+import dynamic from "next/dynamic";
+const AuditoriaVisual = dynamic(
+  () => import("@/components/demos/AuditoriaVisual").then((m) => m.AuditoriaVisual),
+  { ssr: false }
+);
 import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
@@ -36,7 +40,7 @@ function AuditoriaContent() {
         </p>
         <div className="mt-8">
           <Button href="/contacto" variant="gold">
-            Solicitar auditoría
+            Quiero mi auditoría
           </Button>
         </div>
       </motion.div>

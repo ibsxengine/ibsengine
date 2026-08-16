@@ -19,7 +19,7 @@ export function AuditoriaVisual({ compact = false }: AuditoriaVisualProps) {
     if (!inView) return;
     setStep(0);
     setLeaks(0);
-    const stepId = setInterval(() => setStep((s) => (s + 1) % 5), compact ? 1300 : 1500);
+    const stepId = setInterval(() => setStep((s) => (s + 1) % 6), compact ? 1300 : 1500);
     return () => clearInterval(stepId);
   }, [inView, compact]);
 

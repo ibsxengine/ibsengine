@@ -20,13 +20,14 @@ export function Hero() {
       sectionId="hero"
       id="inicio"
       solid={false}
-      className="overflow-hidden py-6 sm:py-8 md:flex md:min-h-[calc(100svh-4rem)] md:flex-col md:justify-center md:py-10"
+      className="relative overflow-hidden py-6 sm:py-8 md:flex md:min-h-[calc(100svh-4rem)] md:flex-col md:justify-center md:py-10"
     >
-      <Container className="relative">
-        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-          <div className="relative overflow-visible max-md:min-h-[calc(100dvh-4.25rem)] md:min-h-0">
-            <HeroRiseMotif />
+      {/* Motif relativo a la AmbientSection = cubre todo el viewport */}
+      <HeroRiseMotif />
 
+      <Container className="relative z-[1]">
+        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10 xl:gap-12">
+          <div className="relative isolate overflow-visible max-md:min-h-[calc(100dvh-4.25rem)] md:min-h-0">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -38,32 +39,32 @@ export function Hero() {
               <motion.p
                 variants={heroFadeUp}
                 transition={{ delay: 0.28, duration: 0.45, ease: heroEase }}
-                className="hero-lead text-text-secondary mx-auto mt-6 max-w-lg text-sm leading-relaxed sm:mt-7 sm:text-base md:mt-8 lg:mx-0"
+                className="hero-lead text-text-secondary mx-auto mt-3 max-w-lg text-sm leading-relaxed sm:mt-4 sm:text-base md:mt-5 lg:mx-0"
               >
-                Digitalizamos cualquier negocio con sistemas que captan, convierten
-                y organizan mientras tú trabajas.
+                Mientras tú haces lo que importa, IBS Engine se encarga del trabajo que llevas años haciendo a mano.
               </motion.p>
 
+              {/* CTAs en la misma fila siempre */}
               <motion.div
                 variants={heroFadeUp}
                 transition={{ delay: 0.38, duration: 0.45, ease: heroEase }}
-                className="hero-cta-row mt-6 flex flex-col items-center gap-3.5 sm:mt-7 sm:flex-row md:mt-8 md:gap-4 lg:justify-start"
+                className="hero-cta-row mt-6 flex flex-row items-center justify-center gap-2.5 sm:mt-7 md:mt-8 lg:justify-start"
               >
-                <Button href="/contacto" variant="gold" breathe>
-                  Solicitar auditoría
+                <Button href="/contacto" variant="gold" breathe className="!px-4 !py-2 !text-xs sm:!px-5 sm:!py-2.5 sm:!text-sm whitespace-nowrap">
+                  Quiero recuperar mi tiempo
                 </Button>
-                <Button href="#como-funciona" variant="secondary" breathe>
-                  Ver el sistema
+                <Button href="#como-funciona" variant="secondary" breathe className="!px-4 !py-2 !text-xs sm:!px-5 sm:!py-2.5 sm:!text-sm whitespace-nowrap">
+                  Enséñame cómo funciona
                 </Button>
               </motion.div>
 
               <motion.p
                 variants={heroFadeUp}
                 transition={{ delay: 0.48, duration: 0.45, ease: heroEase }}
-                className="hero-sector text-text-secondary/80 mx-auto mt-5 max-w-md text-xs leading-relaxed sm:mt-6 md:mt-7 lg:mx-0"
+                className="hero-sector text-text-secondary mx-auto mt-5 max-w-lg text-sm leading-relaxed sm:mt-6 sm:text-base md:mt-7 lg:mx-0"
               >
-                Talleres, clínicas, reformas, hostelería, comercio, servicios…
-                adaptamos el sistema a tu sector.
+                El problema no es que te falte tiempo.{" "}
+                Es que sigues haciendo un trabajo que ya puede hacer una máquina.
               </motion.p>
             </motion.div>
           </div>
