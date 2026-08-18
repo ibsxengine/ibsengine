@@ -1,67 +1,92 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { DemoFrame } from "./DemoFrame";
 import { useSectorDemoSteps } from "./useDemoCycle";
 
-const PHASES = ["sent", "waiting", "triggered", "replied", "updated"] as const;
-const STEP_MS = [900, 1200, 1100, 1300, 1500];
+const PHASES = [
+  { id: "sent",      label: "Presupuesto enviado",         time: "10:22",  status: "done",       icon: "✓" },
+  { id: "waiting",   label: "Sin respuesta · 48h",         time: "10:22+", status: "warning",    icon: "⏱" },
+  { id: "trigger",   label: "Sistema activa seguimiento",  time: "10:23",  status: "processing", icon: "⟳" },
+  { id: "whatsapp",  label: "WhatsApp automático enviado", time: "10:23",  status: "done",       icon: "✓" },
+  { id: "crm",       label: "CRM · Lead actualizado",      time: "10:23",  status: "done",       icon: "✓" },
+] as const;
+
+const STEP_MS = [900, 1100, 900, 1000, 1400];
+
+const STATUS_STYLES: Record<string, string> = {
+  done:       "text-emerald-400/90 border-emerald-400/20 bg-emerald-400/[0.06]",
+  warning:    "text-amber-400/90   border-amber-400/20   bg-amber-400/[0.06]",
+  processing: "text-gold-to/90     border-gold-to/20     bg-gold-to/[0.06]",
+};
 
 export function AutomatizacionDemo() {
-  const { ref, step, scenario } = useSectorDemoSteps(STEP_MS, 6500);
-  const phase = PHASES[Math.min(step, 4)];
-
-  const steps = [
-    { label: "Presupuesto enviado", status: "done", when: "Hoy, 10:22" },
-    { label: "3 días sin respuesta", status: phase === "sent" || phase === "waiting" ? "waiting" : "done", when: "Hace 3 días" },
-    { label: "Seguimiento automático", status: phase === "triggered" || phase === "replied" || phase === "updated" ? "done" : phase === "waiting" ? "pending" : "pending", when: phase === "triggered" || phase === "replied" || phase === "updated" ? "Automático" : "—" },
-    { label: "WhatsApp enviado al cliente", status: phase === "replied" || phase === "updated" ? "done" : "pending", when: phase === "replied" || phase === "updated" ? "Hace 2 min" : "—" },
-    { label: "CRM actualizado", status: phase === "updated" ? "done" : "pending", when: phase === "updated" ? "Ahora" : "—" },
-  ];
+  const { ref, step, scenario } = useSectorDemoSteps(STEP_MS, 7000);
+  const visibleCount = Math.min(step, PHASES.length);
 
   return (
     <div ref={ref}>
       <DemoFrame label="Automatización · Flujo automático" sector={scenario}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={scenario.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="space-y-2"
-          >
-            {steps.map((s, i) => (
+        {/* Header del log */}
+        <div className="mb-3 flex items-center justify-between border-b border-white/[0.06] pb-3">
+          <span className="font-data text-[10px] tracking-widest text-off-white/30 uppercase">
+            Sistema IBS · Log
+          </span>
+          <span className="flex items-center gap-1.5 font-data text-[10px] text-emerald-400/70">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+            ACTIVO
+          </span>
+        </div>
+
+        {/* Entradas del log */}
+        <div className="space-y-2">
+          <AnimatePresence mode="popLayout">
+            {PHASES.slice(0, visibleCount).map((phase, i) => (
               <motion.div
-                key={s.label}
-                initial={{ opacity: 0.4 }}
-                animate={{ opacity: s.status === "pending" ? 0.4 : 1 }}
-                transition={{ duration: 0.4 }}
-                className={`flex items-center justify-between rounded-sm border px-3 py-2.5 transition-colors duration-500 ${
-                  s.status === "done"
-                    ? "border-emerald-500/25 bg-emerald-500/5"
-                    : s.status === "waiting"
-                    ? "border-amber-400/25 bg-amber-400/5"
-                    : "border-white/[0.06] bg-white/[0.02]"
-                }`}
+                key={phase.id}
+                initial={{ opacity: 0, y: 8, filter: "blur(3px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                className={`flex items-center gap-3 rounded-sm border px-3 py-2.5 ${STATUS_STYLES[phase.status]}`}
               >
-                <div className="flex items-center gap-2.5">
-                  <span
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      s.status === "done"
-                        ? "bg-emerald-400"
-                        : s.status === "waiting"
-                        ? "bg-amber-400"
-                        : "bg-white/20"
-                    }`}
-                    aria-hidden
-                  />
-                  <span className="font-data text-xs text-off-white/80">{s.label}</span>
-                </div>
-                <span className="font-data text-[10px] text-white/40">{s.when}</span>
+                {/* Icono / spinner */}
+                {phase.status === "processing" ? (
+                  <motion.span
+                    className="font-data text-xs"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1.1, repeat: Infinity, ease: "linear" }}
+                  >
+                    ⟳
+                  </motion.span>
+                ) : (
+                  <span className="font-data text-xs">{phase.icon}</span>
+                )}
+
+                {/* Label */}
+                <span className="flex-1 font-data text-xs tracking-wide">
+                  {phase.label}
+                </span>
+
+                {/* Tiempo */}
+                <span className="font-data text-[10px] opacity-50 tabular-nums">
+                  {phase.time}
+                </span>
               </motion.div>
             ))}
-          </motion.div>
-        </AnimatePresence>
+          </AnimatePresence>
+
+          {/* Filas pendientes (placeholder) */}
+          {Array.from({ length: Math.max(0, PHASES.length - visibleCount) }).map((_, i) => (
+            <div
+              key={`pending-${i}`}
+              className="flex items-center gap-3 rounded-sm border border-white/[0.05] bg-white/[0.02] px-3 py-2.5"
+            >
+              <span className="h-1 w-1 rounded-full bg-white/20" />
+              <span className="h-2 flex-1 rounded-full bg-white/[0.06]" />
+              <span className="h-2 w-8 rounded-full bg-white/[0.04]" />
+            </div>
+          ))}
+        </div>
       </DemoFrame>
     </div>
   );

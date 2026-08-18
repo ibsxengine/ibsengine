@@ -42,7 +42,7 @@ function ShowcaseContent() {
       >
         <SectionLabel>Arquitectura del sistema</SectionLabel>
         <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-4xl lg:text-[2.75rem]">
-          Tu negocio sigue funcionando. Tú dejas de cargar con todo.
+          Tu negocio sigue funcionando... pero tú dejas de cargar con todo.
         </h2>
         <p className="text-text-secondary mx-auto mt-5 max-w-xl text-sm leading-relaxed sm:text-base">
           Cada canal conectado. Cada contacto procesado. Cada tarea enviada donde toca.

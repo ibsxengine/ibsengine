@@ -25,14 +25,16 @@ function ContactContent() {
         <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-4xl">
           ¿Cuántas horas más vas a seguir haciendo esto a mano?
         </h2>
-        <ul className="mt-6 space-y-3 max-w-md">
+        <ul className="mt-6 space-y-3 max-w-md pl-2">
           {[
             "Cuéntanos qué tareas haces todos los días y cuáles te tienen hasta los cojones.",
             "Te diremos qué podemos automatizar, qué podemos mejorar y qué no merece la pena tocar.",
             "Si podemos ayudarte, te lo diremos. Si no, también.",
           ].map((item) => (
-            <li key={item} className="flex items-start gap-3 text-sm text-text-secondary sm:text-base">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-to" aria-hidden />
+            <li key={item} className="flex items-start text-sm text-text-secondary sm:text-base leading-relaxed">
+              <span className="mr-3 shrink-0" style={{ paddingTop: "0.65em" }}>
+                <span className="block h-[0.4em] w-[0.4em] rounded-full bg-gold-to" />
+              </span>
               <span>{item}</span>
             </li>
           ))}

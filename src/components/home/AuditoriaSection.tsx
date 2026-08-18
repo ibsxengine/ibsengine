@@ -2,11 +2,7 @@
 
 import { useSectionInView } from "@/components/layout/SectionInViewContext";
 import { AUDITORIA_CTA } from "@/lib/content/commercial-blocks";
-import dynamic from "next/dynamic";
-const AuditoriaVisual = dynamic(
-  () => import("@/components/demos/AuditoriaVisual").then((m) => m.AuditoriaVisual),
-  { ssr: false }
-);
+import { AuditoriaVisual } from "@/components/demos/AuditoriaVisual";
 import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
@@ -30,7 +26,6 @@ function AuditoriaContent() {
       >
         <div className="flex items-center gap-3">
           <SectionLabel>{AUDITORIA_CTA.headline}</SectionLabel>
-          <span className="font-serif text-sm text-white/25">03</span>
         </div>
         <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-3xl lg:text-4xl">
           {AUDITORIA_CTA.tagline}

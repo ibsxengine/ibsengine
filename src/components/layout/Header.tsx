@@ -187,7 +187,7 @@ export function Footer() {
       <div className="footer-gold-rule" aria-hidden />
       <Container className="py-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-serif text-base text-navy">{SITE.name}</p>
+          <p className="font-serif text-base text-navy">{SITE.tagline}</p>
           <nav className="flex flex-wrap gap-x-5 gap-y-2">
             {NAV_MAIN.map((link) => (
               <Link

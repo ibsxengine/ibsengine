@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sobre nosotros",
-  description: "Conoce IBS Engine — digitalización y automatización para pymes y autónomos.",
+  description:
+    "IBS Engine — ideas que se convierten en sistemas. Automatización y digitalización para pymes y autónomos.",
 };
 
 export default function SobreNosotrosPage() {
@@ -14,10 +15,11 @@ export default function SobreNosotrosPage() {
         eyebrow="Sobre nosotros"
         title={
           <>
-            Ideas Become <span className="text-gold-accent">Systems</span>
+            Ideas Become{" "}
+            <span className="text-gold-accent">Systems</span>
           </>
         }
-        description="Digitalizamos y automatizamos pymes y autónomos de cualquier sector. No vendemos webs sueltas: montamos sistemas que captan, convierten y organizan."
+        description="No queríamos crear otra empresa que vendiera software. Queríamos construir cosas que realmente funcionaran dentro de un negocio."
       />
       <AboutPageContent />
     </>

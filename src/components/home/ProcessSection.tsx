@@ -21,7 +21,7 @@ const STEP_BADGES = ["Diagnóstico", "Implementación", "Activación", "Acompañ
 function ProcessTimeline() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.45 });
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const reduced = useReducedMotion();
 
   useEffect(() => {
