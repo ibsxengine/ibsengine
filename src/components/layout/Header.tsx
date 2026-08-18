@@ -63,6 +63,7 @@ export function Header() {
     }
     if (pathname === "/") {
       e.preventDefault();
+      window.history.replaceState(null, "", "/");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
