@@ -201,12 +201,12 @@ function DiscoverySection() {
 
 /* ─── 03 FILOSOFÍA ────────────────────────────────────────── */
 
-const PHILO_STEPS = [
+const PHILO_STEPS: { label: string; desc: string; final?: true }[] = [
   { label: "IDEA",     desc: "Identificamos qué está fallando y dónde se pierde tiempo." },
   { label: "SOLUCIÓN", desc: "Diseñamos qué tiene sentido cambiar. Sin vender por vender." },
   { label: "PROCESO",  desc: "Construimos el sistema alrededor de cómo trabaja tu negocio." },
-  { label: "SYSTEM",   desc: "El trabajo empieza a fluir sin que dependa de ti.", final: true as const },
-] as const;
+  { label: "SYSTEM", desc: "El trabajo empieza...", final: true },
+];
 
 function PhilosophySection() {
   const ref = useRef<HTMLDivElement>(null);
