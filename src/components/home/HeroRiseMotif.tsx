@@ -55,7 +55,7 @@ export function HeroRiseMotif() {
   return (
     <div className="hero-rise-motif" aria-hidden style={{ zIndex: -1 }}>
       <div
-        className="hero-rise-motif__cubes"
+        className="hero-rise-motif__cubes max-md:hidden"
         style={{ maskImage: mask, WebkitMaskImage: mask }}
       >
         {CUBES.map((cube, i) => (

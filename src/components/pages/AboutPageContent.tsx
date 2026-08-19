@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef } from "react";
+import { type ReactNode, useRef, useState, useEffect } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
@@ -199,19 +199,42 @@ function DiscoverySection() {
   );
 }
 
-/* ─── 03 FILOSOFÍA ────────────────────────────────────────── */
+/* ─── 03 FILOSOFÍA — casos IDEA → SISTEMA ─────────────── */
 
-const PHILO_STEPS: { label: string; desc: string; final?: true }[] = [
-  { label: "IDEA",     desc: "Identificamos qué está fallando y dónde se pierde tiempo." },
-  { label: "SOLUCIÓN", desc: "Diseñamos qué tiene sentido cambiar. Sin vender por vender." },
-  { label: "PROCESO",  desc: "Construimos el sistema alrededor de cómo trabaja tu negocio." },
-  { label: "SYSTEM", desc: "El trabajo empieza...", final: true },
-];
+const CASES = [
+  {
+    sector: "Reformas",
+    idea: "Los presupuestos se quedan sin respuesta.",
+    sistema: "Seguimiento automático a las 24h. Presupuesto cerrado.",
+    output: ["Presupuesto enviado", "48h → alerta", "WhatsApp auto", "Lead cerrado"],
+  },
+  {
+    sector: "Clínica dental",
+    idea: "No respondo los WhatsApps a tiempo.",
+    sistema: "IA atiende al instante. Cita confirmada en 3 segundos.",
+    output: ["Mensaje recibido", "IA responde", "Cita agendada", "CRM actualizado"],
+  },
+  {
+    sector: "Taller mecánico",
+    idea: "No sé cuántos clientes activos tengo.",
+    sistema: "Panel en tiempo real. Cada cliente, cada estado, desde el móvil.",
+    output: ["23 activos", "4 pendientes", "2 urgentes", "Dashboard live"],
+  },
+] as const;
 
 function PhilosophySection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.15 });
+  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (reduced) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % CASES.length), 3800);
+    return () => clearInterval(id);
+  }, [reduced]);
+
+  const c = CASES[active];
 
   return (
     <section className={SEC} style={{ backgroundColor: NAVY_MID }}>
@@ -225,41 +248,82 @@ function PhilosophySection() {
             <p className="text-text-secondary mt-5 text-sm leading-relaxed sm:text-base">
               Una idea no cambia un negocio hasta que empieza a funcionar.
             </p>
-            <p className="mt-5 text-off-white font-medium sm:text-lg">
+            <p className="mt-4 text-off-white font-medium sm:text-lg">
               IBS Engine. Ideas que se convierten en sistemas.
             </p>
           </FadeIn>
 
-          <div ref={ref} className="flex flex-col items-stretch gap-0">
-            {PHILO_STEPS.map((step, i) => (
-              <div key={step.label} className="flex flex-col">
-                <motion.div
-                  initial={{ opacity: 0, x: 24 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ ...defaultTransition, duration: 0.55, delay: reduced ? 0 : 0.1 + i * 0.2 }}
-                  className={`flex items-start gap-4 rounded-sm border px-5 py-4 ${
-                    step.final
-                      ? "border-gold-to/40 bg-gold-to/[0.08]"
-                      : "border-white/[0.08] bg-white/[0.02]"
-                  }`}
-                >
-                  <div className="flex flex-col items-center gap-1 pt-0.5 shrink-0">
-                    <span className={`font-data text-[10px] tracking-widest uppercase ${
-                      step.final ? "text-gold-to" : "text-white/30"
-                    }`}>{step.label}</span>
-                    {step.final && (
-                      <span className="font-data text-[9px] tracking-widest text-emerald-400/70 uppercase flex items-center gap-1">
-                        <span className="h-1 w-1 animate-pulse rounded-full bg-emerald-400" />ONLINE
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-text-secondary text-xs leading-relaxed sm:text-sm">{step.desc}</p>
-                </motion.div>
-                {i < PHILO_STEPS.length - 1 && (
-                  <div className="ml-5 h-4 w-px bg-gold-to/25" />
-                )}
+          {/* Panel IDEA → SISTEMA */}
+          <div ref={ref} className="space-y-2">
+            {/* Cabecera con sector */}
+            <motion.div
+              key={`sector-${active}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-2 mb-3"
+            >
+              <span className="font-data text-[10px] tracking-[0.16em] text-gold-to/60 uppercase">Sector</span>
+              <span className="font-data text-[10px] tracking-[0.12em] text-gold-to uppercase">{c.sector}</span>
+            </motion.div>
+
+            {/* IDEA */}
+            <motion.div
+              key={`idea-${active}`}
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.45 }}
+              className="rounded-sm border border-white/10 bg-white/[0.03] px-5 py-4"
+            >
+              <p className="font-data text-[10px] tracking-[0.18em] text-off-white/30 uppercase mb-2">IDEA · Problema</p>
+              <p className="text-off-white/80 text-sm leading-relaxed sm:text-base">"{c.idea}"</p>
+            </motion.div>
+
+            {/* Flecha */}
+            <div className="flex items-center justify-center py-1">
+              <div className="h-6 w-px bg-gradient-to-b from-white/10 to-gold-to/50" />
+            </div>
+
+            {/* SISTEMA */}
+            <motion.div
+              key={`sistema-${active}`}
+              initial={{ opacity: 0, x: 12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.45, delay: 0.12 }}
+              className="rounded-sm border border-gold-to/40 bg-gold-to/[0.06] px-5 py-4 shadow-[0_0_24px_rgba(200,170,112,0.08)]"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <p className="font-data text-[10px] tracking-[0.18em] text-gold-to/70 uppercase">SISTEMA · Online</p>
+                <span className="flex items-center gap-1.5 font-data text-[9px] text-emerald-400/80 uppercase">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                  ACTIVO
+                </span>
               </div>
-            ))}
+              <p className="text-off-white text-sm leading-relaxed sm:text-base">{c.sistema}</p>
+
+              {/* Output tags */}
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {c.output.map((tag) => (
+                  <span key={tag} className="font-data text-[10px] rounded-sm border border-emerald-400/20 bg-emerald-400/[0.06] px-2 py-0.5 text-emerald-400/80">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Indicadores de ciclo */}
+            <div className="flex justify-center gap-2 pt-3">
+              {CASES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    i === active ? "w-6 bg-gold-to" : "w-2 bg-white/20"
+                  }`}
+                  aria-label={`Caso ${i + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </Container>
@@ -336,6 +400,30 @@ function DifferentiationSection() {
             <p className="mt-5 text-off-white font-semibold sm:text-lg">
               Si creemos que podemos ayudarte, lo construiremos. Si no, te lo diremos.
             </p>
+
+            {/* Panel de datos — visual IBS Engine */}
+            <div className="mt-8 overflow-hidden rounded-sm border border-white/[0.08]">
+              <div className="flex items-center gap-2 border-b border-white/[0.06] bg-white/[0.03] px-4 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold-to/50" />
+                <span className="font-data text-[10px] tracking-widest text-white/25 uppercase">IBS Engine · Por qué nos importa</span>
+              </div>
+              <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
+                {[
+                  { k: "Auditoría inicial",    v: "Gratis" },
+                  { k: "Compromiso previo",    v: "Ninguno" },
+                  { k: "Lo construimos si",    v: "Creemos en ello" },
+                  { k: "Si no podemos",        v: "Te lo decimos" },
+                ].map(({ k, v }, i) => (
+                  <div
+                    key={k}
+                    className={`px-4 py-3 ${i < 2 ? "border-b border-white/[0.06]" : ""}`}
+                  >
+                    <p className="font-data text-[9px] tracking-widest text-white/30 uppercase">{k}</p>
+                    <p className="font-data text-sm text-off-white/80 mt-0.5">{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </FadeIn>
         </div>
       </Container>
@@ -346,23 +434,64 @@ function DifferentiationSection() {
 /* ─── 06 CIERRE ───────────────────────────────────────────── */
 
 function BrandCloseSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const reduced = useReducedMotion();
+
+  const lines = [
+    { text: "Porque una idea",         gold: false, delay: 0.1 },
+    { text: "no cambia un negocio",     gold: true,  delay: 0.25 },
+    { text: "hasta que empieza",        gold: false, delay: 0.4 },
+    { text: "a funcionar.",             gold: false, delay: 0.52 },
+  ] as const;
+
   return (
-    <section className="py-24 sm:py-32 lg:py-40 text-center" style={{ backgroundColor: NAVY_MID }}>
+    <section className="py-16 sm:py-20 lg:py-28 text-center" style={{ backgroundColor: NAVY_MID }}>
       <Container>
-        <FadeIn className="mx-auto max-w-2xl">
-          <p className="font-data text-[11px] tracking-[0.18em] text-gold-to/70 uppercase">
+        <div ref={ref} className="mx-auto max-w-xl">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5 }}
+            className="font-data text-[11px] tracking-[0.18em] text-gold-to/70 uppercase"
+          >
             Ideas Become Systems
-          </p>
-          <h2 className="font-serif mt-6 text-3xl font-normal text-off-white sm:text-5xl lg:text-[3.25rem] leading-tight">
-            Porque una idea no cambia un negocio<br />hasta que empieza a funcionar.
-          </h2>
-          <p className="text-text-secondary mt-6 text-sm sm:text-base">
-            IBS Engine. Ideas que se convierten en sistemas.
-          </p>
-          <div className="mt-10">
-            <Button href="/contacto" variant="gold">Quiero hablar con IBS →</Button>
+          </motion.p>
+
+          <div className="mt-6">
+            {lines.map(({ text, gold, delay }) => (
+              <motion.span
+                key={text}
+                initial={{ opacity: 0, y: 14 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ ...defaultTransition, duration: 0.6, delay: reduced ? 0 : delay }}
+                className={`block font-serif font-normal leading-tight text-3xl sm:text-5xl lg:text-[3rem] ${
+                  gold ? "text-gold-to" : "text-off-white"
+                }`}
+              >
+                {text}
+              </motion.span>
+            ))}
           </div>
-        </FadeIn>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: reduced ? 0 : 0.7 }}
+            className="text-text-secondary mt-6 text-sm sm:text-base"
+          >
+            IBS Engine. Ideas que se convierten en sistemas.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: reduced ? 0 : 0.85 }}
+            className="mt-10"
+          >
+            <Button href="/contacto" variant="gold">Quiero hablar con IBS</Button>
+          </motion.div>
+        </div>
       </Container>
     </section>
   );

@@ -48,12 +48,12 @@ export function Hero() {
               <motion.div
                 variants={heroFadeUp}
                 transition={{ delay: 0.38, duration: 0.45, ease: heroEase }}
-                className="hero-cta-row mt-6 flex flex-row items-center justify-center gap-2.5 sm:mt-7 md:mt-8 lg:justify-start"
+                className="hero-cta-row mt-6 flex flex-col items-center gap-2.5 sm:mt-7 sm:flex-row md:mt-8 lg:justify-start"
               >
-                <Button href="/contacto" variant="gold" breathe className="!px-4 !py-2 !text-xs sm:!px-5 sm:!py-2.5 sm:!text-sm whitespace-nowrap">
+                <Button href="/contacto" variant="gold" breathe className="w-full max-w-[280px] !px-4 !py-2 !text-xs sm:w-auto sm:max-w-none sm:!px-5 sm:!py-2.5 sm:!text-sm">
                   Quiero recuperar mi tiempo
                 </Button>
-                <Button href="#como-funciona" variant="secondary" breathe className="!px-4 !py-2 !text-xs sm:!px-5 sm:!py-2.5 sm:!text-sm whitespace-nowrap">
+                <Button href="#como-funciona" variant="secondary" breathe className="w-full max-w-[280px] !px-4 !py-2 !text-xs sm:w-auto sm:max-w-none sm:!px-5 sm:!py-2.5 sm:!text-sm">
                   Enséñame cómo funciona
                 </Button>
               </motion.div>
