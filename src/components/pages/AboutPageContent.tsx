@@ -20,7 +20,7 @@ function FadeIn({ children, delay = 0, className = "" }: {
   children: ReactNode; delay?: number; className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.18 });
+  const inView = useInView(ref, { once: false, amount: 0.18 });
   return (
     <motion.div ref={ref}
       initial={{ opacity: 0, y: 28 }}
@@ -39,7 +39,7 @@ const FLOW_STEPS = ["IDEA", "CONEXIÓN", "AUTOMATIZACIÓN", "SISTEMA"] as const;
 
 function IdeaFlow() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: false, amount: 0.3 });
   const reduced = useReducedMotion();
 
   return (
@@ -129,7 +129,7 @@ const OUTPUTS = ["CLIENTE", "CITA", "PRESUPUESTO", "SEGUIMIENTO"];
 
 function DiscoverySection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: false, amount: 0.25 });
 
   return (
     <section className={SEC} style={{ backgroundColor: NAVY_ALT }}>
@@ -224,7 +224,7 @@ const CASES = [
 
 function PhilosophySection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: false, amount: 0.25 });
   const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
 
@@ -400,30 +400,6 @@ function DifferentiationSection() {
             <p className="mt-5 text-off-white font-semibold sm:text-lg">
               Si creemos que podemos ayudarte, lo construiremos. Si no, te lo diremos.
             </p>
-
-            {/* Panel de datos — visual IBS Engine */}
-            <div className="mt-8 overflow-hidden rounded-sm border border-white/[0.08]">
-              <div className="flex items-center gap-2 border-b border-white/[0.06] bg-white/[0.03] px-4 py-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-gold-to/50" />
-                <span className="font-data text-[10px] tracking-widest text-white/25 uppercase">IBS Engine · Por qué nos importa</span>
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-                {[
-                  { k: "Auditoría inicial",    v: "Gratis" },
-                  { k: "Compromiso previo",    v: "Ninguno" },
-                  { k: "Lo construimos si",    v: "Creemos en ello" },
-                  { k: "Si no podemos",        v: "Te lo decimos" },
-                ].map(({ k, v }, i) => (
-                  <div
-                    key={k}
-                    className={`px-4 py-3 ${i < 2 ? "border-b border-white/[0.06]" : ""}`}
-                  >
-                    <p className="font-data text-[9px] tracking-widest text-white/30 uppercase">{k}</p>
-                    <p className="font-data text-sm text-off-white/80 mt-0.5">{v}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
           </FadeIn>
         </div>
       </Container>
@@ -435,7 +411,7 @@ function DifferentiationSection() {
 
 function BrandCloseSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: false, amount: 0.3 });
   const reduced = useReducedMotion();
 
   const lines = [

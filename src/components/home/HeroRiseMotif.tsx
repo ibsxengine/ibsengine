@@ -50,12 +50,12 @@ function IsoCube({ size }: { size: number }) {
 /** Solo en franjas laterales — máscara horizontal que oculta el centro */
 export function HeroRiseMotif() {
   const mask =
-    "linear-gradient(to right, black 0%, black 10%, transparent 16%, transparent 84%, black 90%, black 100%)";
+    "linear-gradient(to bottom, black 0%, black 16%, transparent 23%, transparent 77%, black 84%, black 100%)";
 
   return (
     <div className="hero-rise-motif" aria-hidden style={{ zIndex: -1 }}>
       <div
-        className="hero-rise-motif__cubes max-md:hidden"
+        className="hero-rise-motif__cubes max-lg:hidden"
         style={{ maskImage: mask, WebkitMaskImage: mask }}
       >
         {CUBES.map((cube, i) => (

@@ -1,88 +1,119 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { DemoFrame } from "./DemoFrame";
 import { useSectorDemoSteps } from "./useDemoCycle";
 
-const STAGES = [
-  { label: "Sin respuesta · 48h",        note: "TRIGGER" },
-  { label: "Sistema detecta inactividad", note: "IA · Procesando" },
-  { label: "WhatsApp personalizado",      note: "Enviado · 10:23" },
-  { label: "CRM · Lead actualizado",      note: "Cerrado" },
+/** Escenarios reales por sector */
+const SCENARIOS = {
+  "Taller mecánico": {
+    ref: "Presupuesto #1042 · Cambio frenos · BMW",
+    amount: "420 €",
+    client: "Motor Ruiz",
+  },
+  "Clínica dental": {
+    ref: "Presupuesto · Ortodoncia invisible",
+    amount: "2.800 €",
+    client: "García, Ana",
+  },
+  "Reformas": {
+    ref: "Presupuesto · Reforma cocina",
+    amount: "6.500 €",
+    client: "López Hogar",
+  },
+} as const;
+
+const STEPS = [
+  "Presupuesto enviado · sin respuesta",
+  "48h · Sistema activa seguimiento",
+  "WhatsApp automático al cliente",
+  "Cliente responde · Reunión cerrada",
 ] as const;
 
-const STEP_MS = [1000, 1100, 1000, 1400];
+const STEP_MS = [1100, 1200, 1000, 1600];
 
 export function AutomatizacionDemo() {
   const { ref, step, scenario } = useSectorDemoSteps(STEP_MS, 6500);
-  const active = Math.min(step, STAGES.length - 1);
-  const done   = Math.min(step, STAGES.length);
+  const active = Math.min(step, STEPS.length - 1);
+  const done   = Math.min(step + 1, STEPS.length);
+
+  const sc = SCENARIOS[scenario.label as keyof typeof SCENARIOS] ?? {
+    ref: "Presupuesto · Trabajo pendiente",
+    amount: "—",
+    client: "Cliente",
+  };
 
   return (
     <div ref={ref}>
       <DemoFrame label="Automatización · Flujo automático" sector={scenario}>
-        {/* Header */}
-        <div className="mb-4 flex items-center justify-between border-b border-[color:var(--shell-border)] pb-3">
-          <span className="font-data text-[10px] tracking-widest text-[color:var(--shell-ink-muted)] uppercase">
-            Sistema IBS · Pipeline
-          </span>
-          <span className="flex items-center gap-1.5 font-data text-[10px] text-[color:var(--shell-ink-muted)]">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold-from/80" />
-            ACTIVO
-          </span>
+
+        {/* Tarjeta del presupuesto — contexto real */}
+        <div className="mb-4 rounded-sm border border-[color:var(--shell-border)] bg-[color:var(--shell-surface,var(--shell-panel-inner))] px-4 py-3">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-data text-[10px] tracking-widest text-[color:var(--shell-ink-muted)] uppercase">
+                Referencia
+              </p>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={sc.ref}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="font-data text-xs text-[color:var(--shell-ink)] mt-0.5"
+                >
+                  {sc.ref}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="font-data text-[10px] tracking-widest text-[color:var(--shell-ink-muted)] uppercase">
+                Importe
+              </p>
+              <p className="font-data text-xs font-medium text-[color:var(--shell-ink)]">{sc.amount}</p>
+            </div>
+          </div>
         </div>
 
-        {/* Pipeline */}
+        {/* Pipeline de pasos */}
         <div className="space-y-0">
-          {STAGES.map((stage, i) => {
+          {STEPS.map((label, i) => {
             const isDone    = i < done;
-            const isActive  = i === active && step < STAGES.length;
-            const isPending = i > active;
+            const isActive  = i === active;
+            const isPending = i >= done;
 
             return (
-              <div key={stage.label} className="flex gap-3">
-                {/* Línea vertical + indicador */}
+              <div key={label} className="flex gap-3">
+                {/* Línea + nodo */}
                 <div className="flex flex-col items-center">
-                  <motion.div
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, delay: i * 0.12 }}
-                    className={`mt-3 h-2.5 w-2.5 rounded-full border transition-all duration-500 ${
-                      isDone
-                        ? "border-[color:var(--shell-ink-muted)] bg-[color:var(--shell-ink-muted)]"
-                        : isActive
-                        ? "animate-pulse border-gold-from bg-gold-from/30"
-                        : "border-[color:var(--shell-border)] bg-transparent"
-                    }`}
-                  />
-                  {i < STAGES.length - 1 && (
-                    <div className="mt-1 mb-1 w-px flex-1 bg-[color:var(--shell-border)]" style={{ minHeight: "18px" }} />
+                  <div className={`mt-[13px] h-2 w-2 rounded-full border transition-all duration-400 ${
+                    isDone
+                      ? "border-[color:var(--shell-ink-muted)] bg-[color:var(--shell-ink-muted)]"
+                      : isActive
+                      ? "animate-pulse border-gold-from/70 bg-gold-from/20"
+                      : "border-[color:var(--shell-border)] bg-transparent"
+                  }`} />
+                  {i < STEPS.length - 1 && (
+                    <div className="mt-1 mb-1 w-px bg-[color:var(--shell-border)]" style={{ minHeight: "16px" }} />
                   )}
                 </div>
 
-                {/* Contenido */}
-                <motion.div
-                  className={`mb-3 flex flex-1 items-start justify-between gap-2 transition-opacity duration-500 ${
-                    isPending ? "opacity-35" : "opacity-100"
+                {/* Label */}
+                <motion.p
+                  className={`mb-3 flex-1 font-data text-xs leading-snug pt-2.5 transition-opacity duration-400 ${
+                    isPending
+                      ? "opacity-30 text-[color:var(--shell-ink-muted)]"
+                      : isDone
+                      ? "opacity-70 text-[color:var(--shell-ink)]"
+                      : "opacity-100 text-[color:var(--shell-ink)] font-medium"
                   }`}
-                  initial={{ opacity: 0, x: 6 }}
-                  animate={{ opacity: isPending ? 0.35 : 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.12 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: isPending ? 0.3 : isDone ? 0.7 : 1 }}
+                  transition={{ duration: 0.4 }}
                 >
-                  <span className={`font-data text-xs leading-snug ${
-                    isDone
-                      ? "text-[color:var(--shell-ink)]"
-                      : isActive
-                      ? "text-[color:var(--shell-ink)] font-medium"
-                      : "text-[color:var(--shell-ink-muted)]"
-                  }`}>
-                    {isDone && <span className="mr-1.5 opacity-60">✓</span>}
-                    {stage.label}
-                  </span>
-                  <span className="shrink-0 font-data text-[10px] text-[color:var(--shell-ink-muted)] tabular-nums">
-                    {isDone || isActive ? stage.note : "—"}
-                  </span>
-                </motion.div>
+                  {isDone && <span className="mr-1.5 opacity-50">✓</span>}
+                  {label}
+                </motion.p>
               </div>
             );
           })}
