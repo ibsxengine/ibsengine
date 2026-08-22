@@ -19,15 +19,22 @@ import React from "react";
 
 /* ── DESKTOP cubes (lg+) ─────────────────────────────────────── */
 const DESKTOP_CUBES = [
-  // Sub-columna 1: margen oscuro izquierdo (safe en lg+)
-  { left: "2%",   top: "8%",  size: 44, delay: 0,    dur: 12, anchor: "tl" as const },
-  { left: "3%",   top: "45%", size: 24, delay: 3.2,  dur: 10, anchor: "tl" as const },
-  { left: "1%",   top: "78%", size: 20, delay: 1.5,  dur: 11, anchor: "bl" as const },
+  // ZONA 1 (2-4%) — aparecer rápido, tamaños grandes
+  { left: "3%",   top: "8%",  size: 38, delay: 0,    dur: 12, anchor: "tl" as const },
+  { left: "2%",   top: "72%", size: 20, delay: 2.5,  dur: 10, anchor: "bl" as const },
 
-  // Centro-arriba (zona entre texto y demo, encima del frame)
+  // ZONA 2 (8-10%) — medianos, delays moderados
+  { left: "9%",   top: "25%", size: 28, delay: 1.5,  dur: 11, anchor: "tl" as const },
+  { left: "8%",   top: "80%", size: 22, delay: 4.0,  dur: 10, anchor: "bl" as const },
+
+  // ZONA 3 (14-16%) — delays BAJOS para que aparezcan antes
+  { left: "15%",  top: "48%", size: 24, delay: 0.8,  dur: 11, anchor: "tl" as const },
+  { left: "14%",  top: "90%", size: 14, delay: 3.2,  dur: 10, anchor: "bl" as const },
+
+  // CENTRO-ARRIBA
   { left: "44%",  top: "4%",  size: 28, delay: 1.5,  dur: 11, anchor: "tl" as const },
 
-  // Derecha (safe siempre)
+  // DERECHA (sin tocar)
   { left: "95%",  top: "16%", size: 40, delay: 0.8,  dur: 11, anchor: "tr" as const },
   { left: "92%",  top: "50%", size: 26, delay: 2.5,  dur: 12, anchor: "tr" as const },
   { left: "97%",  top: "80%", size: 16, delay: 4.2,  dur: 10, anchor: "br" as const },

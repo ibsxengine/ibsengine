@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef, useState, useEffect } from "react";
+import React, { type ReactNode, useRef, useState, useEffect } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
@@ -376,11 +376,142 @@ function HowWeThinkSection() {
 
 /* ─── 05 DIFERENCIACIÓN ───────────────────────────────────── */
 
+function IdeaToSystem({ inView, reduced }: { inView: boolean; reduced: boolean | null }) {
+  const [step, setStep] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!inView) { setStep(0); return; }
+    const timers = [
+      setTimeout(() => setStep(1), reduced ? 0 : 200),
+      setTimeout(() => setStep(2), reduced ? 0 : 900),
+      setTimeout(() => setStep(3), reduced ? 0 : 1800),
+      setTimeout(() => setStep(4), reduced ? 0 : 2600),
+      setTimeout(() => setStep(5), reduced ? 0 : 3200),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [inView, reduced]);
+
+  const systemItems = ["WhatsApp", "CRM", "Agenda", "Seguimiento"];
+
+  return (
+    <div className="w-full max-w-xs border border-white/[0.1] bg-white/[0.02] overflow-hidden">
+      {/* Header */}
+      <div className="border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
+        <span className="font-data text-[9px] tracking-[0.18em] text-off-white/35 uppercase">
+          IBS Engine · From Idea to System
+        </span>
+      </div>
+
+      <div className="p-4 space-y-3">
+        {/* IDEA */}
+        <motion.div
+          animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 8 }}
+          initial={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.4 }}
+          className="border border-white/[0.08] bg-white/[0.02] p-3"
+        >
+          <p className="font-data text-[9px] tracking-widest text-gold-to/60 uppercase mb-1.5">Idea</p>
+          <p className="font-data text-[10px] text-off-white/55 leading-relaxed italic">
+            "Quiero dejar de perder clientes por WhatsApp."
+          </p>
+        </motion.div>
+
+        {/* Arrow 1 */}
+        <motion.div
+          animate={{ opacity: step >= 2 ? 1 : 0 }}
+          initial={{ opacity: 0 }}
+          className="flex justify-center"
+        >
+          <span className="font-data text-[11px] text-gold-to/30">↓</span>
+        </motion.div>
+
+        {/* IBS ENGINE */}
+        <motion.div
+          animate={{ opacity: step >= 2 ? 1 : 0, y: step >= 2 ? 0 : 8 }}
+          initial={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.4 }}
+          className="border border-gold-to/30 bg-gold-to/[0.04] p-3"
+        >
+          <p className="font-data text-[9px] tracking-widest text-gold-to/70 uppercase mb-2">IBS Engine</p>
+          {["Problema identificado", "Solución diseñada", "Automatización conectada"].map((item, i) => (
+            <motion.div
+              key={item}
+              animate={{ opacity: step >= 2 + (i * 0.3) ? 1 : 0.2 }}
+              initial={{ opacity: 0.2 }}
+              className="flex items-center gap-2 py-0.5"
+            >
+              <motion.span
+                animate={{ color: step >= 2 ? "rgba(52,211,153,0.7)" : "rgba(255,255,255,0.2)" }}
+                className="font-data text-[10px]"
+              >
+                {step >= 2 ? "✓" : "○"}
+              </motion.span>
+              <span className="font-data text-[10px] text-off-white/50">{item}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Arrow 2 */}
+        <motion.div
+          animate={{ opacity: step >= 3 ? 1 : 0 }}
+          initial={{ opacity: 0 }}
+          className="flex justify-center"
+        >
+          <span className="font-data text-[11px] text-gold-to/30">↓</span>
+        </motion.div>
+
+        {/* SYSTEM */}
+        <motion.div
+          animate={{ opacity: step >= 3 ? 1 : 0, y: step >= 3 ? 0 : 8 }}
+          initial={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.4 }}
+          className="border border-white/[0.08] bg-white/[0.02] p-3"
+        >
+          <p className="font-data text-[9px] tracking-widest text-off-white/30 uppercase mb-2">System</p>
+          <div className="space-y-1.5">
+            {systemItems.map((item, i) => (
+              <div key={item} className="flex items-center justify-between">
+                <span className="font-data text-[10px] text-off-white/40">{item}</span>
+                <motion.span
+                  animate={{ opacity: step >= 4 ? 1 : 0 }}
+                  initial={{ opacity: 0 }}
+                  transition={{ delay: i * 0.15 }}
+                  className="h-1.5 w-1.5 rounded-full bg-emerald-400"
+                />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* WORKING */}
+        <motion.div
+          animate={{ opacity: step >= 5 ? 1 : 0 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center justify-between border-t border-white/[0.06] pt-3"
+        >
+          <span className="font-data text-[9px] tracking-[0.16em] text-emerald-400/70 uppercase">
+            Working
+          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+            <span className="font-data text-[9px] text-emerald-400/50 tracking-widest uppercase">Live</span>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 function DifferentiationSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: false, amount: 0.25 });
+  const reduced = useReducedMotion();
+
   return (
     <section className={SEC} style={{ backgroundColor: NAVY_ALT }}>
       <Container>
-        <div className="mx-auto max-w-2xl">
+        <div ref={ref} className="grid gap-16 lg:grid-cols-2 lg:gap-20 items-center">
           <FadeIn>
             <SectionLabel>Nuestra forma de hacerlo</SectionLabel>
             <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-4xl">
@@ -401,6 +532,10 @@ function DifferentiationSection() {
               Si creemos que podemos ayudarte, lo construiremos. Si no, te lo diremos.
             </p>
           </FadeIn>
+
+          <div className="flex justify-center">
+            <IdeaToSystem inView={inView} reduced={reduced} />
+          </div>
         </div>
       </Container>
     </section>
