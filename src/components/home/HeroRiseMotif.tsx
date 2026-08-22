@@ -65,7 +65,7 @@ export function HeroRiseMotif() {
   const mobileMask = "linear-gradient(to bottom, black 0%, black 8%, transparent 12%, transparent 100%)";
   return (
     <div className="hero-rise-motif" aria-hidden style={{ zIndex: -1 }}>
-      <div className="hero-rise-motif__cubes hidden md:block">
+      <div className="hero-rise-motif__cubes hidden lg:block">
         {DESKTOP_CUBES.map((c, i) => <C key={i} {...c} />)}
       </div>
       <div className="hero-rise-motif__cubes md:hidden"
