@@ -36,17 +36,17 @@ const DESKTOP_CUBES = [
 /* ── TABLET PORTRAIT / MOBILE LANDSCAPE cubes (md, < lg) ──────── */
 /* Texto centrado → ~14% margen oscuro en cada lado */
 const TABLET_CUBES = [
-  // LEFT — 3 sub-columnas (1%, 6%, 10%)
-  { left: "2%",   top: "5%",  size: 26, delay: 0,    dur: 11, anchor: "tl" as const }, // grande
-  { left: "6%",   top: "32%", size: 12, delay: 2.5,  dur: 10, anchor: "tl" as const }, // pequeño
-  { left: "10%",  top: "60%", size: 20, delay: 4.5,  dur: 11, anchor: "tl" as const }, // mediano
-  { left: "3%",   top: "82%", size: 8,  delay: 1.8,  dur: 10, anchor: "bl" as const }, // mini
+  // LEFT — tamaños muy variados: gigante / mini / grande / pequeño
+  { left: "2%",   top: "5%",  size: 48, delay: 0,    dur: 11, anchor: "tl" as const },
+  { left: "6%",   top: "32%", size: 8,  delay: 2.5,  dur: 10, anchor: "tl" as const },
+  { left: "10%",  top: "60%", size: 30, delay: 4.5,  dur: 11, anchor: "tl" as const },
+  { left: "3%",   top: "82%", size: 14, delay: 1.8,  dur: 10, anchor: "bl" as const },
 
-  // RIGHT — 3 sub-columnas (89%, 93%, 97%)
-  { left: "97%",  top: "12%", size: 28, delay: 0.6,  dur: 11, anchor: "tr" as const }, // grande
-  { left: "93%",  top: "42%", size: 10, delay: 3.0,  dur: 10, anchor: "tr" as const }, // mini
-  { left: "89%",  top: "68%", size: 22, delay: 1.5,  dur: 11, anchor: "br" as const }, // mediano
-  { left: "95%",  top: "86%", size: 14, delay: 4.8,  dur: 10, anchor: "br" as const }, // pequeño
+  // RIGHT — distinto patrón de tamaños: pequeño / enorme / mediano / micro
+  { left: "97%",  top: "12%", size: 12, delay: 0.6,  dur: 11, anchor: "tr" as const },
+  { left: "93%",  top: "42%", size: 52, delay: 3.0,  dur: 10, anchor: "tr" as const },
+  { left: "89%",  top: "68%", size: 22, delay: 1.5,  dur: 11, anchor: "br" as const },
+  { left: "95%",  top: "86%", size: 6,  delay: 4.8,  dur: 10, anchor: "br" as const },
 ] as const;
 
 /* ── MOBILE cubes (< md) — solo zona superior ─────────────────── */
