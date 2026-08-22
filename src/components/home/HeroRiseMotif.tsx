@@ -34,8 +34,13 @@ const DESKTOP_CUBES = [
 ] as const;
 
 /* ── TABLET PORTRAIT / MOBILE LANDSCAPE cubes (md, < lg) ──────── */
-/* Solo RIGHT porque en single-column layout el texto es full-width */
 const TABLET_CUBES = [
+  // Izquierda — 1% es el único sitio safe antes del texto en single-column
+  { left: "1%",   top: "10%", size: 14, delay: 1.0,  dur: 11, anchor: "tl" as const },
+  { left: "1%",   top: "48%", size: 12, delay: 3.5,  dur: 10, anchor: "tl" as const },
+  { left: "1%",   top: "78%", size: 10, delay: 5.0,  dur: 11, anchor: "bl" as const },
+
+  // Derecha — safe siempre
   { left: "96%",  top: "12%", size: 22, delay: 0.5,  dur: 11, anchor: "tr" as const },
   { left: "97%",  top: "45%", size: 16, delay: 2.2,  dur: 10, anchor: "tr" as const },
   { left: "95%",  top: "75%", size: 18, delay: 3.8,  dur: 11, anchor: "br" as const },
