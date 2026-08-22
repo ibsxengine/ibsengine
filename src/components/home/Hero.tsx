@@ -22,12 +22,14 @@ export function Hero() {
       solid={false}
       className="relative overflow-hidden py-6 sm:py-8 md:flex md:min-h-[calc(100svh-4rem)] md:flex-col md:justify-center md:py-10"
     >
+      {/* Motif al nivel del hero — máscara usa el ancho del viewport */}
+      <HeroRiseMotif />
+
       <Container className="relative z-[1]">
         <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10 xl:gap-12">
 
-          {/* Columna texto — HeroRiseMotif vive aquí, mask vertical lo controla */}
+          {/* Columna texto */}
           <div className="relative isolate overflow-visible max-md:min-h-[calc(100dvh-4.25rem)] md:min-h-0">
-            <HeroRiseMotif />
 
             <motion.div
               variants={staggerContainer}
@@ -56,7 +58,7 @@ export function Hero() {
               <motion.div
                 variants={heroFadeUp}
                 transition={{ delay: 0.38, duration: 0.45, ease: heroEase }}
-                className="hero-cta-row mt-6 flex flex-col items-center gap-2.5 sm:mt-7 sm:flex-row md:mt-8 lg:justify-start"
+                className="hero-cta-row mt-6 flex flex-col items-center justify-center gap-2.5 sm:mt-7 sm:flex-row md:mt-8 lg:justify-start"
               >
                 <Button
                   href="/contacto"
