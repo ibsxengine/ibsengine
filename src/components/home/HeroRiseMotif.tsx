@@ -2,29 +2,46 @@
 
 import React from "react";
 
+/**
+ * Tres grupos según viewport:
+ *
+ * MOBILE (< 768px):
+ *   3 mini-cubos solo arriba del título (máscara vertical).
+ *
+ * TABLET PORTRAIT + MOBILE LANDSCAPE (768-1023px):
+ *   Solo cubos en márgenes RIGHT estrictos (96-98%) — el izquierdo
+ *   no tiene margen libre en layout single-column.
+ *
+ * DESKTOP / TABLET LANDSCAPE (≥ 1024px):
+ *   Set completo: sub-columna 1 izquierda (1-4%), centro, derecha.
+ *   Sub-columnas 2 y 3 eliminadas — siempre están dentro del texto.
+ */
+
+/* ── DESKTOP cubes (lg+) ─────────────────────────────────────── */
 const DESKTOP_CUBES = [
-  // ── SUB-COLUMNA 1 (1-4%) ─────────────────────────────────────
-  { left: "2%",   top: "8%",  size: 44, delay: 0,    dur: 12, anchor: "tl" as const }, // grande
-  { left: "3%",   top: "70%", size: 20, delay: 3.2,  dur: 10, anchor: "bl" as const }, // pequeño
+  // Sub-columna 1: margen oscuro izquierdo (safe en lg+)
+  { left: "2%",   top: "8%",  size: 44, delay: 0,    dur: 12, anchor: "tl" as const },
+  { left: "3%",   top: "45%", size: 24, delay: 3.2,  dur: 10, anchor: "tl" as const },
+  { left: "1%",   top: "78%", size: 20, delay: 1.5,  dur: 11, anchor: "bl" as const },
 
-  // ── SUB-COLUMNA 2 (8-10%) — 3 cubos con tamaños distintos ────
-  { left: "9%",   top: "3%",  size: 32, delay: 1.8,  dur: 11, anchor: "tl" as const }, // mediano-grande
-  { left: "8%",   top: "45%", size: 18, delay: 4.5,  dur: 10, anchor: "tl" as const }, // pequeño (QUITADO el de 88%)
-  { left: "9%",   top: "82%", size: 24, delay: 2.0,  dur: 11, anchor: "bl" as const }, // mediano
-
-  // ── SUB-COLUMNA 3 (14-16%) — 2 cubos, más variados ───────────
-  { left: "15%",  top: "20%", size: 28, delay: 3.0,  dur: 10, anchor: "tl" as const }, // mediano (QUITADO uno)
-  { left: "14%",  top: "65%", size: 14, delay: 6.0,  dur: 11, anchor: "tl" as const }, // pequeño
-
-  // ── CENTRO-ARRIBA (zona amarilla) ────────────────────────────
+  // Centro-arriba (zona entre texto y demo, encima del frame)
   { left: "44%",  top: "4%",  size: 28, delay: 1.5,  dur: 11, anchor: "tl" as const },
 
-  // ── DERECHA (intacto) ─────────────────────────────────────────
+  // Derecha (safe siempre)
   { left: "95%",  top: "16%", size: 40, delay: 0.8,  dur: 11, anchor: "tr" as const },
   { left: "92%",  top: "50%", size: 26, delay: 2.5,  dur: 12, anchor: "tr" as const },
   { left: "97%",  top: "80%", size: 16, delay: 4.2,  dur: 10, anchor: "br" as const },
 ] as const;
 
+/* ── TABLET PORTRAIT / MOBILE LANDSCAPE cubes (md, < lg) ──────── */
+/* Solo RIGHT porque en single-column layout el texto es full-width */
+const TABLET_CUBES = [
+  { left: "96%",  top: "12%", size: 22, delay: 0.5,  dur: 11, anchor: "tr" as const },
+  { left: "97%",  top: "45%", size: 16, delay: 2.2,  dur: 10, anchor: "tr" as const },
+  { left: "95%",  top: "75%", size: 18, delay: 3.8,  dur: 11, anchor: "br" as const },
+] as const;
+
+/* ── MOBILE cubes (< md) — solo zona superior ─────────────────── */
 const MOBILE_CUBES = [
   { left: "6%",  top: "2%", size: 16, delay: 0,   dur: 11, anchor: "tl" as const },
   { left: "88%", top: "3%", size: 14, delay: 1.5, dur: 10, anchor: "tr" as const },
@@ -65,13 +82,23 @@ export function HeroRiseMotif() {
   const mobileMask = "linear-gradient(to bottom, black 0%, black 8%, transparent 12%, transparent 100%)";
   return (
     <div className="hero-rise-motif" aria-hidden style={{ zIndex: -1 }}>
+
+      {/* Desktop / tablet landscape (lg+) */}
       <div className="hero-rise-motif__cubes hidden lg:block">
         {DESKTOP_CUBES.map((c, i) => <C key={i} {...c} />)}
       </div>
+
+      {/* Tablet portrait / mobile landscape (md a lg) */}
+      <div className="hero-rise-motif__cubes hidden md:block lg:hidden">
+        {TABLET_CUBES.map((c, i) => <C key={i} {...c} />)}
+      </div>
+
+      {/* Mobile (< md) */}
       <div className="hero-rise-motif__cubes md:hidden"
         style={{ maskImage: mobileMask, WebkitMaskImage: mobileMask }}>
         {MOBILE_CUBES.map((c, i) => <C key={i} {...c} />)}
       </div>
+
     </div>
   );
 }
