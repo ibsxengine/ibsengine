@@ -34,16 +34,19 @@ const DESKTOP_CUBES = [
 ] as const;
 
 /* ── TABLET PORTRAIT / MOBILE LANDSCAPE cubes (md, < lg) ──────── */
+/* Texto centrado → ~14% margen oscuro en cada lado */
 const TABLET_CUBES = [
-  // Izquierda — 1% es el único sitio safe antes del texto en single-column
-  { left: "1%",   top: "10%", size: 14, delay: 1.0,  dur: 11, anchor: "tl" as const },
-  { left: "1%",   top: "48%", size: 12, delay: 3.5,  dur: 10, anchor: "tl" as const },
-  { left: "1%",   top: "78%", size: 10, delay: 5.0,  dur: 11, anchor: "bl" as const },
+  // LEFT — 3 sub-columnas (1%, 6%, 10%)
+  { left: "2%",   top: "5%",  size: 16, delay: 0,    dur: 11, anchor: "tl" as const }, // sub1 arriba
+  { left: "6%",   top: "32%", size: 14, delay: 2.5,  dur: 10, anchor: "tl" as const }, // sub2 medio
+  { left: "10%",  top: "60%", size: 12, delay: 4.5,  dur: 11, anchor: "tl" as const }, // sub3 abajo
+  { left: "3%",   top: "82%", size: 10, delay: 1.8,  dur: 10, anchor: "bl" as const }, // sub1 fondo
 
-  // Derecha — safe siempre
-  { left: "96%",  top: "12%", size: 22, delay: 0.5,  dur: 11, anchor: "tr" as const },
-  { left: "97%",  top: "45%", size: 16, delay: 2.2,  dur: 10, anchor: "tr" as const },
-  { left: "95%",  top: "75%", size: 18, delay: 3.8,  dur: 11, anchor: "br" as const },
+  // RIGHT — 3 sub-columnas (89%, 93%, 97%)
+  { left: "97%",  top: "12%", size: 18, delay: 0.6,  dur: 11, anchor: "tr" as const }, // sub3 arriba
+  { left: "93%",  top: "42%", size: 14, delay: 3.0,  dur: 10, anchor: "tr" as const }, // sub2 medio
+  { left: "89%",  top: "68%", size: 16, delay: 1.5,  dur: 11, anchor: "br" as const }, // sub1 abajo
+  { left: "95%",  top: "86%", size: 12, delay: 4.8,  dur: 10, anchor: "br" as const }, // sub2 fondo
 ] as const;
 
 /* ── MOBILE cubes (< md) — solo zona superior ─────────────────── */
