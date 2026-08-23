@@ -333,11 +333,71 @@ function PhilosophySection() {
 
 /* ─── 04 CÓMO PENSAMOS ────────────────────────────────────── */
 
+function StrikeVisual({ inView, reduced }: { inView: boolean; reduced: boolean | null }) {
+  const LINES = [
+    { text: "MÁS HERRAMIENTAS", delay: 0 },
+    { text: "MÁS PROCESOS",     delay: 0.28 },
+    { text: "MÁS TRABAJO",      delay: 0.56 },
+    { text: "MÁS HORAS",        delay: 0.84 },
+  ] as const;
+  return (
+    <div className="space-y-0 select-none max-w-xs">
+      {LINES.map((line) => (
+        <motion.div
+          key={line.text}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.35, delay: reduced ? 0 : line.delay }}
+          className="flex items-center gap-3 py-2.5 border-b border-white/[0.05]"
+        >
+          <span className="font-data text-[12px] tracking-[0.14em] text-off-white/35 uppercase line-through decoration-red-400/40 decoration-1">
+            {line.text}
+          </span>
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: reduced ? 0 : line.delay + 0.28 }}
+            className="font-data text-[14px] text-red-400/45 ml-auto"
+          >
+            ×
+          </motion.span>
+        </motion.div>
+      ))}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.4, delay: reduced ? 0 : 1.2 }}
+        className="flex flex-col items-start pt-4 gap-1"
+      >
+        <span className="font-data text-[11px] tracking-[0.22em] text-gold-to uppercase">IBS ENGINE</span>
+        <span className="font-data text-[12px] text-gold-to/40">↓</span>
+      </motion.div>
+      {[
+        { text: "MENOS TRABAJO.", delay: 1.55, gold: false },
+        { text: "MÁS TIEMPO.",   delay: 1.8,  gold: true },
+      ].map((l) => (
+        <motion.p
+          key={l.text}
+          initial={{ opacity: 0, y: 6 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+          transition={{ duration: 0.4, delay: reduced ? 0 : l.delay }}
+          className={"font-serif text-2xl font-semibold " + (l.gold ? "text-gold-to" : "text-off-white")}
+        >
+          {l.text}
+        </motion.p>
+      ))}
+    </div>
+  );
+}
+
 function HowWeThinkSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: false, amount: 0.2 });
+  const reduced = useReducedMotion();
   return (
     <section className={SEC} style={{ backgroundColor: NAVY }}>
       <Container>
-        <div className="mx-auto max-w-2xl">
+        <div ref={ref} className="grid gap-16 lg:grid-cols-2 lg:gap-20 items-center">
           <FadeIn>
             <SectionLabel>Nuestra forma de pensar</SectionLabel>
             <h2 className="font-serif mt-4 text-2xl font-semibold text-off-white sm:text-4xl">
@@ -350,29 +410,21 @@ function HowWeThinkSection() {
               Miramos cómo trabaja realmente un negocio, qué le está haciendo perder tiempo
               y qué tiene sentido cambiar. Después decidimos qué tecnología utilizar.
             </p>
-            <ul className="mt-5 space-y-2 text-sm text-off-white/70 sm:text-base">
-              {[
-                "A veces será IA.",
-                "A veces automatización.",
-                "A veces una aplicación.",
-                "A veces simplemente conectar dos cosas que ya funcionaban por separado.",
-              ].map((line) => (
-                <li key={line} className="flex items-start gap-2.5">
-                  <span className="mt-[0.47em] h-[0.4em] w-[0.4em] shrink-0 rounded-full bg-gold-to/60" />
-                  {line}
-                </li>
-              ))}
-            </ul>
             <div className="mt-8 border-l-2 border-gold-to/40 pl-5">
               <p className="text-off-white font-medium sm:text-lg">La tecnología viene después.</p>
               <p className="text-text-secondary text-sm mt-1">El problema viene primero.</p>
             </div>
           </FadeIn>
+
+          <div>
+            <StrikeVisual inView={inView} reduced={reduced} />
+          </div>
         </div>
       </Container>
     </section>
   );
 }
+
 
 /* ─── 05 DIFERENCIACIÓN ───────────────────────────────────── */
 

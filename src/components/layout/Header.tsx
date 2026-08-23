@@ -124,6 +124,8 @@ export function Header() {
                 >
                   <Link
                     href={link.href}
+                    scroll={true}
+                    onClick={() => window.scrollTo({ top: 0 })}
                     className={`nav-desktop-link group ${isContactPage ? "nav-desktop-link--compact" : ""} ${isActive(link.href) ? "is-active" : ""}`}
                   >
                     {link.label}
