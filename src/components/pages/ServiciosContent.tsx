@@ -5,6 +5,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { defaultTransition } from "@/lib/motion/variants";
+import { DemoFrame } from "@/components/demos/DemoFrame";
 
 /* ─── Tokens ────────────────────────────────────────────────── */
 const NAVY     = "#0d1e3a";
@@ -38,31 +39,32 @@ function ServiceBlock({
   bg: string; flip?: boolean;
 }) {
   return (
-    <section className="py-16 sm:py-20 lg:py-24" style={{ backgroundColor: bg }}>
+    <section className="py-20 sm:py-24 lg:py-28" style={{ backgroundColor: bg }}>
       <Container>
-        <div className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-16 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
+        <div className={`grid items-center gap-14 lg:grid-cols-2 lg:gap-20 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
           <FadeIn>
-            <p className="font-data text-[10px] tracking-[0.2em] text-gold-to/70 uppercase">
-              {num} · {label}
-            </p>
-            <h2 className="font-serif mt-3 text-2xl font-semibold text-off-white sm:text-3xl lg:text-4xl leading-tight">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="font-bodoni text-5xl font-normal text-gold-to/20 leading-none">{num}</span>
+              <span className="font-data text-[10px] tracking-[0.2em] text-gold-to/60 uppercase">{label}</span>
+            </div>
+            <h2 className="font-serif text-2xl font-semibold text-off-white sm:text-3xl lg:text-4xl leading-tight">
               {tagline}
             </h2>
             <div className="mt-5 space-y-3 text-sm text-text-secondary leading-relaxed sm:text-base">
               {body}
             </div>
-            <div className="mt-6">
-              <p className="font-data text-[9px] tracking-[0.16em] text-off-white/30 uppercase mb-2">
+            <div className="mt-7 pt-5 border-t border-white/[0.06]">
+              <p className="font-data text-[9px] tracking-[0.18em] text-off-white/25 uppercase mb-2">
                 Puede encargarse de
               </p>
-              <p className="font-data text-[10px] text-off-white/50 leading-relaxed">
+              <p className="text-xs text-off-white/40 leading-relaxed">
                 {capabilities.join(" · ")}
               </p>
             </div>
           </FadeIn>
-          <div>
+          <FadeIn delay={0.1}>
             {demo}
-          </div>
+          </FadeIn>
         </div>
       </Container>
     </section>
@@ -90,18 +92,8 @@ function IaPrivadaDemo() {
 
   return (
     <div ref={ref}>
-      <div className="rounded-sm border border-white/[0.1] bg-white/[0.02] overflow-hidden">
-        <div className="border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
-          <div>
-            <span className="font-data text-[10px] tracking-widest text-off-white/40 uppercase">Motor Ruiz · Asistente</span>
-          </div>
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400/70" />
-            <span className="font-data text-[9px] text-emerald-400/60 uppercase">En línea</span>
-          </span>
-        </div>
-
-        <div className="p-4 space-y-3 min-h-[220px]">
+      <DemoFrame label="IA privada · Motor Ruiz">
+        <div className="space-y-3 min-h-[200px]">
           {CHAT.slice(0, step).map((msg, i) => (
             <motion.div
               key={i}
@@ -110,23 +102,25 @@ function IaPrivadaDemo() {
               transition={{ duration: 0.35 }}
               className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}
             >
-              <div className={`max-w-[80%] rounded-sm px-3 py-2 text-sm leading-relaxed ${
+              <div className={`max-w-[82%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed ${
                 msg.from === "user"
-                  ? "bg-white/[0.06] text-off-white/60"
-                  : "border border-gold-to/20 bg-gold-to/[0.05] text-off-white/80"
+                  ? "bg-[color:var(--shell-border)] text-[color:var(--shell-ink-muted)]"
+                  : "border border-[color:var(--shell-border)] bg-[color:var(--shell-panel-inner)] text-[color:var(--shell-ink)]"
               }`}>
+                {msg.from === "ai" && (
+                  <p className="font-data text-[8px] tracking-widest text-[color:var(--shell-ink-muted)] uppercase mb-1">Motor Ruiz · IA</p>
+                )}
                 {msg.text}
               </div>
             </motion.div>
           ))}
         </div>
-
-        <div className="border-t border-white/[0.06] px-4 py-2 flex items-center gap-2">
-          <span className="flex-1 font-data text-[10px] text-off-white/20 italic">
-            Entrenada con los documentos de Motor Ruiz
-          </span>
+        <div className="mt-4 pt-3 border-t border-[color:var(--shell-border)]">
+          <p className="font-data text-[9px] text-[color:var(--shell-ink-muted)] italic">
+            Entrenada con los documentos del negocio
+          </p>
         </div>
-      </div>
+      </DemoFrame>
     </div>
   );
 }
@@ -154,54 +148,50 @@ function AgentesVozDemo() {
   }, [inView]);
 
   return (
-    <div ref={ref} className="rounded-sm border border-white/[0.1] bg-white/[0.02] overflow-hidden">
-      <div className="border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
-        <span className="font-data text-[10px] tracking-widest text-off-white/35 uppercase">Llamada en curso</span>
-        {step >= 1 && (
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            <span className="font-data text-[9px] text-emerald-400/70">Conectada</span>
-          </span>
-        )}
-      </div>
+    <div ref={ref}>
+      <DemoFrame label="Agente de voz · Clínica Dental">
+        <div className="space-y-2.5 min-h-[200px]">
+          {LINES.slice(0, step).map((line, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={line.meta ? "border-b border-[color:var(--shell-border)] pb-2 mb-1" : "flex gap-3 items-start"}
+            >
+              {line.meta ? (
+                <p className="font-data text-[9px] text-[color:var(--shell-ink-muted)]">{line.text}</p>
+              ) : (
+                <>
+                  <span className={`font-data text-[9px] uppercase tracking-widest w-10 shrink-0 mt-0.5 font-medium ${
+                    line.label === "IA" ? "text-[color:var(--shell-ink)]" : "text-[color:var(--shell-ink-muted)]"
+                  }`}>{line.label}</span>
+                  <p className="text-sm text-[color:var(--shell-ink)] leading-relaxed">{line.text}</p>
+                </>
+              )}
+            </motion.div>
+          ))}
+        </div>
 
-      <div className="p-4 space-y-2.5 min-h-[200px]">
-        {LINES.slice(0, step).map((line, i) => (
+        {step >= LINES.length && (
           <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={line.meta ? "border-b border-white/[0.05] pb-2 mb-1" : "flex gap-2 items-start"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-4 border-t border-[color:var(--shell-border)] pt-3"
           >
-            {line.meta ? (
-              <p className="font-data text-[9px] text-off-white/25">{line.text}</p>
-            ) : (
-              <>
-                <span className={`font-data text-[9px] uppercase tracking-widest w-10 shrink-0 mt-0.5 ${
-                  line.label === "IA" ? "text-gold-to/60" : "text-off-white/25"
-                }`}>{line.label}</span>
-                <p className="text-sm text-off-white/65 leading-relaxed">{line.text}</p>
-              </>
-            )}
+            <p className="font-data text-[9px] text-[color:var(--shell-ink-muted)] uppercase tracking-widest mb-2">Resumen</p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {[["Servicio", "Revisión + limpieza"], ["Cita", "Miércoles 10:30"], ["CRM", "Actualizado ✓"], ["WhatsApp", "Confirmación enviada"]].map(([k, v]) => (
+                <div key={k}>
+                  <span className="font-data text-[9px] text-[color:var(--shell-ink-muted)]">{k} · </span>
+                  <span className="font-data text-[9px] text-[color:var(--shell-ink)]">{v}</span>
+                </div>
+              ))}
+            </div>
+            <p className="font-data text-[10px] text-[color:var(--shell-ink-muted)] italic mt-3">Tú no cogiste el teléfono.</p>
           </motion.div>
-        ))}
-      </div>
-
-      {step >= LINES.length && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="border-t border-white/[0.06] bg-emerald-500/[0.03] px-4 py-3"
-        >
-          <div className="grid grid-cols-2 gap-2 text-[10px]">
-            {[["Paciente", "Sin identificar"], ["Servicio", "Revisión + limpieza"], ["Cita", "Miércoles 10:30"], ["CRM", "Actualizado ✓"]].map(([k, v]) => (
-              <div key={k}><span className="text-off-white/25">{k} · </span><span className="text-off-white/55">{v}</span></div>
-            ))}
-          </div>
-          <p className="text-[10px] text-off-white/30 italic mt-2.5">Tú no cogiste el teléfono.</p>
-        </motion.div>
-      )}
+        )}
+      </DemoFrame>
     </div>
   );
 }
@@ -228,12 +218,8 @@ function AutomatizacionDemo() {
   }, [inView]);
 
   return (
-    <div ref={ref} className="rounded-sm border border-white/[0.1] bg-white/[0.02] overflow-hidden">
-      <div className="border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
-        <span className="font-data text-[10px] tracking-widest text-off-white/35 uppercase">Un día de trabajo · sin intervención</span>
-        <span className="font-data text-[9px] text-emerald-400/60 uppercase tracking-widest">Automático</span>
-      </div>
-      <div className="p-4 space-y-0">
+    <DemoFrame ref={ref} label="Un día de trabajo · sin intervención" className="shadow-[0_8px_48px_rgba(0,0,0,0.45)]">
+      <div className="space-y-0">
         {EVENTS.map((evt, i) => (
           <motion.div
             key={i}
@@ -250,7 +236,7 @@ function AutomatizacionDemo() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </DemoFrame>
   );
 }
 
@@ -269,11 +255,8 @@ function SistemasDemo() {
   const [active, setActive] = useState<Set<string>>(new Set(MODULES.filter(m => m.on).map(m => m.id)));
 
   return (
-    <div className="rounded-sm border border-white/[0.1] bg-white/[0.02] overflow-hidden">
-      <div className="border-b border-white/[0.08] px-4 py-2.5">
-        <span className="font-data text-[10px] tracking-widest text-off-white/35 uppercase">Construimos lo que necesitas</span>
-      </div>
-      <div className="p-4">
+    <DemoFrame label="Construimos lo que necesitas" className="shadow-[0_8px_48px_rgba(0,0,0,0.45)]">
+      <div>
         <p className="font-data text-[9px] text-off-white/25 uppercase tracking-widest mb-3">Módulos activos</p>
         <div className="grid grid-cols-2 gap-2">
           {MODULES.map((m) => {
@@ -298,11 +281,11 @@ function SistemasDemo() {
             );
           })}
         </div>
-        <p className="font-data text-[9px] text-off-white/20 mt-4 italic">
-          {active.size} módulo{active.size !== 1 ? "s" : ""} seleccionado{active.size !== 1 ? "s" : ""} · Toca para activar o desactivar
+        <p className="font-data text-[9px] text-[color:var(--shell-ink-muted)] mt-4 italic">
+          {active.size} módulo{active.size !== 1 ? "s" : ""} activo{active.size !== 1 ? "s" : ""} · Toca para cambiar
         </p>
       </div>
-    </div>
+    </DemoFrame>
   );
 }
 
@@ -321,7 +304,7 @@ function CrecimientoDemo() {
   ];
 
   return (
-    <div ref={ref} className="rounded-sm border border-white/[0.1] bg-white/[0.02] overflow-hidden p-4">
+    <DemoFrame ref={ref} label="De visitante a cliente" className="shadow-[0_8px_48px_rgba(0,0,0,0.45)]">
       <div className="flex flex-col gap-0">
         {STEPS.map((s, i) => (
           <div key={s.label} className="flex flex-col items-start">
@@ -347,7 +330,7 @@ function CrecimientoDemo() {
           </div>
         ))}
       </div>
-    </div>
+    </DemoFrame>
   );
 }
 
@@ -378,11 +361,8 @@ function DatosDemo() {
   }, [inView]);
 
   return (
-    <div ref={ref} className="rounded-sm border border-white/[0.1] bg-white/[0.02] overflow-hidden">
-      <div className="border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
-        <span className="font-data text-[10px] tracking-widest text-off-white/35 uppercase">Este mes</span>
-      </div>
-      <div className="p-4 space-y-4">
+    <DemoFrame ref={ref} label="Panel · Este mes" className="shadow-[0_8px_48px_rgba(0,0,0,0.45)]">
+      <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           {METRICS.map((m, i) => (
             <motion.div
@@ -392,7 +372,7 @@ function DatosDemo() {
               transition={{ delay: i * 0.1 }}
               className="border border-white/[0.06] px-3 py-2"
             >
-              <p className="font-serif text-lg text-off-white">{m.label}</p>
+              <p className="font-serif text-2xl font-semibold text-off-white">{m.label}</p>
               <p className="font-data text-[9px] text-off-white/35">{m.sub}</p>
             </motion.div>
           ))}
@@ -420,7 +400,7 @@ function DatosDemo() {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </DemoFrame>
   );
 }
 
