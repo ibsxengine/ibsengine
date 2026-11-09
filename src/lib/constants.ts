@@ -1,7 +1,7 @@
 export const SITE = {
   name: "IBS Engine",
   tagline: "Ideas Become Systems",
-  url: "https://ibsengine.vercel.app",
+  url: "https://ibsengine.com",
   email: "info@ibsengine.com",
   description:
     "Digitalizamos y automatizamos pymes y autónomos de cualquier sector: WhatsApp, agendas, CRM y software a medida.",

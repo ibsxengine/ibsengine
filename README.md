@@ -31,9 +31,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Producción
 
-- **URL pública (última versión):** https://ibsengine.vercel.app/
+- **Deploy Vercel:** https://ibsengine.vercel.app/ (hasta que DNS apunte al dominio)
+- **Dominio canónico:** https://ibsengine.com (`SITE.url` en `src/lib/constants.ts`)
 - **Repo GitHub:** `ibsxengine/ibsengine`
-- **Dominio de marca (pendiente DNS):** https://ibsengine.com
 
 ## Deploy on Vercel
 
